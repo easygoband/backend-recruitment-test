@@ -1,4 +1,4 @@
-package com.easy.zssn.requestObjects;
+package com.easy.zssn.Objects;
 
 import com.easy.zssn.model.Inventory;
 import com.easy.zssn.model.Location;
@@ -8,7 +8,16 @@ public class SurvivorRO {
     public Survivor newSurvivor;
     public Location newLocation;
     public Inventory newInventory;
+    public Inventory[] items;
 
+
+    public Inventory[] getItems() {
+        return items;
+    }
+
+    public void setItems(Inventory[] items) {
+        this.items = items;
+    }
 
     public Location getNewLocation() {
         return newLocation;

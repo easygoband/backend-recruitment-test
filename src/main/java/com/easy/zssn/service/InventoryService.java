@@ -11,16 +11,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class InventoryService implements InventoryInterface {
     @Autowired
-    public InventoryRepository InventoryService;
+    public InventoryRepository inventoryRepository;
     @Override
     public Inventory upsertInventory(Inventory newInventory) {
-        return InventoryService.save(newInventory);
+        return inventoryRepository.save(newInventory);
     }
     @Override
     public boolean deleteInventory(int id) {
         boolean resultado= false;
         try {
-            InventoryService.deleteById(id);
+            inventoryRepository.deleteById(id);
             resultado = true;
         } catch (Exception e) {
             resultado = false;
@@ -29,10 +29,15 @@ public class InventoryService implements InventoryInterface {
     }
     @Override
     public Inventory findByIDInventory(int id) {
-        return InventoryService.findById(id).get();
+        return inventoryRepository.findById(id).get();
     }
     @Override
     public List<Inventory> findAllInventory() {
-        return InventoryService.findAll();
+        return inventoryRepository.findAll();
+    }
+
+    @Override
+    public List<Inventory> findAllBySurvivorID(int id) {
+        return inventoryRepository.findAllBySurvivorID(id);
     }
 }

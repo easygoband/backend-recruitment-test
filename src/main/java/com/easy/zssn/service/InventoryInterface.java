@@ -12,4 +12,6 @@ public interface InventoryInterface {
     public Inventory findByIDInventory(int id);
 
     public List<Inventory> findAllInventory();
+
+    public List<Inventory> findAllBySurvivorID(int id);
 }

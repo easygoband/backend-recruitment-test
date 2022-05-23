@@ -2,8 +2,8 @@ package com.easy.zssn.controller;
 
 import java.util.List;
 
+import com.easy.zssn.Objects.SurvivorRO;
 import com.easy.zssn.model.Location;
-import com.easy.zssn.requestObjects.SurvivorRO;
 import com.easy.zssn.service.LocationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
