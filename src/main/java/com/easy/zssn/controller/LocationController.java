@@ -2,62 +2,58 @@ package com.easy.zssn.controller;
 
 import java.util.List;
 
-import com.easy.zssn.model.Survivor;
+import com.easy.zssn.model.Location;
 import com.easy.zssn.requestObjects.SurvivorRO;
-import com.easy.zssn.service.SurvivorService;
+import com.easy.zssn.service.LocationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 @Controller
-@RequestMapping(path="/survivor")
-public class SurvivorController {
+@RequestMapping(path="/location")
+public class LocationController {
     @Autowired
-    public SurvivorService survivorService;
-    
-    /*
-        CRUD Survivor
+    public LocationService locationService;
+
+
+    /**
+     * CRUD Location
      */
     @PostMapping(value="/")
-    public @ResponseBody Survivor upsertSurvivor(
+    public @ResponseBody Location upsertLocation(
         @RequestBody SurvivorRO newObj
     ){
-        return survivorService.upsertSurvivor(newObj.getNewSurvivor());
+        return locationService.upsertLocation(newObj.getNewLocation());
     }
 
     @DeleteMapping(value="/")
-    public @ResponseBody String deleteSurvivor(
+    public @ResponseBody String deleteLocation(
         @RequestParam int id
     ){  String resultado = "";
-        if(survivorService.deleteSurvivor(id))
+        if(locationService.deleteLocation(id))
             resultado = "Survivor deleted correctly";
         else
             resultado = "Error trying to delete Survivor";
         return resultado;
     }
 
-    @GetMapping(value="/findbyidSurvivor")
-    public @ResponseBody Survivor findbySurvivor(
+    @GetMapping(value="/findbyidLocation")
+    public @ResponseBody Location findbyidLocation(
         @RequestParam int id
     ){
-        return survivorService.findByIDSurvivor(id);
+        return locationService.findByIDLocation(id);
     }
 
     @GetMapping(value="/")
-    public @ResponseBody List<Survivor> findall(
+    public @ResponseBody List<Location> findallLocation(
     ){
-        return survivorService.findAllSurvivor();
+        return locationService.findAllLocation();
     }
-
-    
-    //-----------------------------------------------
-    
 }
