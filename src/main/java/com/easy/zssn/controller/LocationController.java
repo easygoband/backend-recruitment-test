@@ -26,14 +26,14 @@ public class LocationController {
     /**
      * CRUD Location
      */
-    @PostMapping(value="/")
+    @PostMapping
     public @ResponseBody Location upsertLocation(
         @RequestBody SurvivorRO newObj
     ){
         return locationService.upsertLocation(newObj.getNewLocation());
     }
 
-    @DeleteMapping(value="/")
+    @DeleteMapping
     public @ResponseBody String deleteLocation(
         @RequestParam int id
     ){  String resultado = "";
@@ -44,14 +44,14 @@ public class LocationController {
         return resultado;
     }
 
-    @GetMapping(value="/findbyidLocation")
+    @GetMapping(value="/findbyid")
     public @ResponseBody Location findbyidLocation(
         @RequestParam int id
     ){
         return locationService.findByIDLocation(id);
     }
 
-    @GetMapping(value="/")
+    @GetMapping
     public @ResponseBody List<Location> findallLocation(
     ){
         return locationService.findAllLocation();

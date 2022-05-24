@@ -8,6 +8,17 @@ public class ReportSurvivor {
     int Medication_per_Survivor;
     int Ammunition_per_Survivor;
     int Points_Lost_Infected;
+
+    @Override
+    public String toString(){
+        return "Infected_Survivors: "+Infected_Survivors+"\n"+
+        "Not_Infected_Survivors: "+Not_Infected_Survivors+"\n"+
+        "Water_per_Survivor: "+Water_per_Survivor+"\n"+
+        "Food_per_Survivor: "+Food_per_Survivor+"\n"+
+        "Medication_per_Survivor: "+Medication_per_Survivor+"\n"+
+        "Ammunition_per_Survivor: "+Ammunition_per_Survivor+"\n"+
+        "Points_Lost_Infected: "+Points_Lost_Infected;
+    }
     public float getInfected_Survivors() {
         return Infected_Survivors;
     }

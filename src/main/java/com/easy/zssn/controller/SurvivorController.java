@@ -5,6 +5,7 @@ import java.util.List;
 import com.easy.zssn.Objects.ItemPoints;
 import com.easy.zssn.Objects.ReportSurvivor;
 import com.easy.zssn.Objects.SurvivorRO;
+import com.easy.zssn.Objects.TradeObject;
 import com.easy.zssn.model.Inventory;
 import com.easy.zssn.model.Location;
 import com.easy.zssn.model.Survivor;
@@ -38,14 +39,14 @@ public class SurvivorController {
     /*
         CRUD Survivor
      */
-    @PostMapping(value="/")
+    @PostMapping
     public @ResponseBody Survivor upsertSurvivor(
         @RequestBody SurvivorRO newObj
     ){
         return survivorService.upsertSurvivor(newObj.getNewSurvivor());
     }
 
-    @DeleteMapping(value="/")
+    @DeleteMapping
     public @ResponseBody String deleteSurvivor(
         @RequestParam int id
     ){  String resultado = "";
@@ -56,14 +57,14 @@ public class SurvivorController {
         return resultado;
     }
 
-    @GetMapping(value="/findbyidSurvivor")
+    @GetMapping(value="/findbyid")
     public @ResponseBody Survivor findbySurvivor(
         @RequestParam int id
     ){
         return survivorService.findByIDSurvivor(id);
     }
 
-    @GetMapping(value="/")
+    @GetMapping
     public @ResponseBody List<Survivor> findall(
     ){
         return survivorService.findAllSurvivor();
@@ -71,8 +72,8 @@ public class SurvivorController {
 
     
     //------------------------ Alta completa del survivor
-    @PostMapping(value="/add")
-    public String agregarSurvivor(
+    @PostMapping(path="/add")
+    public @ResponseBody String agregarSurvivor(
         @RequestBody SurvivorRO newObj
     ){
         String resultado = "";
@@ -89,7 +90,7 @@ public class SurvivorController {
             inv.setSurvivorID(newSurvivor.getId());
             inventoryService.upsertInventory(inv);
         }
-
+        resultado = "Agregado sobreviviente y sus objetos";
         return resultado;
     }
     
@@ -112,46 +113,119 @@ public class SurvivorController {
 
     @PostMapping(path="/trade")
     public @ResponseBody String trade(
-        @RequestBody int survivorID1,
-        @RequestBody Inventory[] inventory1,
-        @RequestBody int survivorID2,
-        @RequestBody Inventory[] inventory2
+        @RequestBody TradeObject trade
     ){
         //validamos que el survivor 1 tenga lo suficiente para negociar
-        List<Inventory> lista1 = inventoryService.findAllBySurvivorID(survivorID1);
-        Inventory differenceleft1 ;
+        List<Inventory> lista1 = inventoryService.findAllBySurvivorID(trade.getSurvivorID1());
+        Inventory differenceleft1 = null ;
         int points1 =0;
-        for( int i=0; i < inventory1.length ; i++ ){
-            differenceleft1 = getDifferenceItems( lista1, inventory1[i]);
+        for( int i=0; i < trade.getInventory1().length ; i++ ){
+            differenceleft1 = getDifferenceItems( lista1, trade.getInventory1()[i]);
             if( differenceleft1.getItemCount() < 0){
-                return "Not enougth "+inventory1[i].getItemName()+" to trade.";
+                return "Not enougth "+trade.getInventory1()[i].getItemName()+" to trade.";
             }
-            points1 += getPoints(inventory1[i]);
+            points1 += getPoints(trade.getInventory1()[i]);
         }
 
         //validamos que el survivor 2 tenga lo suficiente para negociar
-        List<Inventory> lista2 = inventoryService.findAllBySurvivorID(survivorID2);
-        Inventory differenceleft2 ;
+        List<Inventory> lista2 = inventoryService.findAllBySurvivorID(trade.getSurvivorID2());
+        Inventory differenceleft2 = null ;
         int points2 = 0;
-        for( int i=0; i < inventory2.length ; i++ ){
-            differenceleft2 = getDifferenceItems( lista2, inventory2[i]);
+        for( int i=0; i < trade.getInventory2().length ; i++ ){
+            differenceleft2 = getDifferenceItems( lista2, trade.getInventory2()[i]);
             if( differenceleft2.getItemCount() < 0){
-                return "Not enougth "+inventory2[i].getItemName()+" to trade.";
+                return "Not enougth "+trade.getInventory2()[i].getItemName()+" to trade.";
             }
-            points2 += getPoints(inventory2[i]);
+            points2 += getPoints(trade.getInventory2()[i]);
         }
 
         if(points1 != points2)
-            return "trade is not fair!!";
+            return "trade is not fair!! Points in Survivor 1 "+points1+" Survivor2 "+points2;
 
+        for( int i=0; i < trade.getInventory1().length ; i++ ){
+            for( Inventory invaux : lista2 ){
+                if(  invaux.getItemName().toLowerCase().contentEquals( trade.getInventory1()[i].getItemName().toLowerCase() )  ){
+                    invaux.setItemCount( invaux.getItemCount() + trade.getInventory1()[i].getItemCount() ) ;
+                    break;
+                }
+            }
+        }
+        
+        for( int i=0; i < trade.getInventory2().length ; i++ ){
+            for( Inventory invaux : lista1 ){
+                if(  invaux.getItemName().toLowerCase().contentEquals( trade.getInventory2()[i].getItemName().toLowerCase() )  ){
+                    invaux.setItemCount( invaux.getItemCount() + trade.getInventory2()[i].getItemCount() ) ;
+                    break;
+                }
+            }
+        }
+        
+        //Actualizamos los datos requeridos
+        inventoryService.upsertInventory(differenceleft1);
+        //inventoryService.upsertInventory(differenceleft2);
         return "trade done!!";
     }
 
     @GetMapping(path="/reports")
     public @ResponseBody ReportSurvivor reports(){
         ReportSurvivor result= new ReportSurvivor();
+        int cantidad_no_infectados=0;
+        int cantidad_infectados=0;
+        int puntos_perdidos=0;
+        int Water_Total=0;
+        int Food_Total=0;
+        int Medication_Total=0;
+        int Ammunition_Total=0;
 
-        //result.set
+        List<Survivor> list = survivorService.findAllSurvivor();
+        for( Survivor aux : list ){
+            List<Inventory> listaAux = inventoryService.findAllBySurvivorID(aux.getId());
+            if(aux.isInfected()){
+                cantidad_infectados++;
+                for( Inventory invaux : listaAux ){
+                    puntos_perdidos = puntos_perdidos + getPoints(invaux);
+                }
+            }
+            else{
+                cantidad_no_infectados++;
+                for( Inventory invaux : listaAux ){
+                    switch ( invaux.getItemName().toLowerCase() ) {
+                        case "water":
+                            Water_Total= Water_Total + invaux.getItemCount();
+                            break;
+                        case "food":
+                            Food_Total= Food_Total + invaux.getItemCount();
+                            break;
+                        case "medication":
+                            Medication_Total= Medication_Total + invaux.getItemCount();
+                            break;
+                        case "ammunition":
+                            Ammunition_Total= Ammunition_Total + invaux.getItemCount();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+        if(list.size()>0){
+            result.setInfected_Survivors( (100*(float)cantidad_infectados/list.size()) );
+            result.setNot_Infected_Survivors( (100*(float)cantidad_no_infectados/list.size()));
+            result.setAmmunition_per_Survivor(Ammunition_Total/cantidad_no_infectados);
+            result.setFood_per_Survivor(Food_Total/cantidad_no_infectados);
+            result.setMedication_per_Survivor(Medication_Total/cantidad_no_infectados);
+            result.setWater_per_Survivor(Water_Total/cantidad_no_infectados);
+            result.setPoints_Lost_Infected(puntos_perdidos);
+        }
+        else{
+            result.setInfected_Survivors( 0 );
+            result.setNot_Infected_Survivors( 0 );
+            result.setAmmunition_per_Survivor(0);
+            result.setFood_per_Survivor(0);
+            result.setMedication_per_Survivor(0);
+            result.setWater_per_Survivor(0);
+            result.setPoints_Lost_Infected(0);
+        }
         return result;
     }
 
