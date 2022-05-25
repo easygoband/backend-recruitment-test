@@ -10,6 +10,26 @@ public class SurvivorRO {
     public Inventory newInventory;
     public Inventory[] items;
 
+    @Override
+    public String toString(){
+        String resultado = "";
+        if(newSurvivor != null){
+            resultado+="Survivor:"+newSurvivor.toString()+"\n";
+        }
+        if(newLocation != null){
+            resultado+="Location:"+newLocation.toString()+"\n";
+        }
+        if(newInventory != null){
+            resultado+="Inventory:"+newInventory.toString()+"\n";
+        }
+        if(items != null){
+            for(Inventory inventory: items){
+                resultado+= inventory.toString()+"\n";
+            }
+        }
+        
+        return resultado;
+    }
 
     public Inventory[] getItems() {
         return items;

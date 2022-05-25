@@ -15,6 +15,19 @@ public class Survivor{
     private boolean isInfected=false;
     private int reports=0;
 
+    public Survivor(){
+        
+    }
+    public Survivor(int id, String name , int age, String gender, boolean isInfected){
+        this.id = id ;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.isInfected = isInfected;
+        if(isInfected){
+            this.reports = 3;
+        }
+    }
     public void addReport(){
         reports++;
         if(reports>=3)

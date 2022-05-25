@@ -13,6 +13,25 @@ public class Inventory {
     Integer survivorID;
     String itemName;
     int itemCount;
+
+    public Inventory(){}
+    public Inventory(int id, int survivorID, String itemName, int itemCount){
+        this.id = id;
+        this.survivorID = survivorID;
+        this.itemName = itemName;
+        this.itemCount = itemCount;
+    }
+
+    @Override
+    public String toString(){
+        String resultado="";
+        resultado+="ID:"+id+"\n";
+        resultado+="survivorID:"+survivorID+"\n";
+        resultado+="itemName:"+itemName+"\n";
+        resultado+="itemCount:"+itemCount+"\n";
+        return resultado;
+    }
+
     public Integer getId() {
         return id;
     }

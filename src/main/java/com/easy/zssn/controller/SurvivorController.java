@@ -77,17 +77,18 @@ public class SurvivorController {
         @RequestBody SurvivorRO newObj
     ){
         String resultado = "";
-        Survivor newSurvivor = survivorService.upsertSurvivor(newObj.getNewSurvivor());
-        Location newLocation = newObj.getNewLocation();
-        newLocation.setSurvivorID(newSurvivor.getId());
-        locationService.upsertLocation(newLocation);
+        System.out.println("\n\n\n\n\n\n\n"+newObj.toString());
+        Survivor newSurvivor1 = survivorService.upsertSurvivor(newObj.getNewSurvivor());
+        Location newLocation1 = newObj.getNewLocation();
+        newLocation1.setSurvivorID(newSurvivor1.getId());
+        locationService.upsertLocation(newLocation1);
         Inventory[] items = newObj.getItems();
 
         for(int i = 0 ; i < items.length ; i++ ){
             Inventory inv= new Inventory();
             inv.setItemCount(items[i].getItemCount());
             inv.setItemName(items[i].getItemName());
-            inv.setSurvivorID(newSurvivor.getId());
+            inv.setSurvivorID(newSurvivor1.getId());
             inventoryService.upsertInventory(inv);
         }
         resultado = "Agregado sobreviviente y sus objetos";

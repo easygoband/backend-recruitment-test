@@ -10,6 +10,19 @@ public class Location {
     double latitude;
     double longitude;
 
+    public Location(){}
+    public Location( int survivorID, double latitude, double longitude  ){
+        this.survivorID = survivorID;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    @Override
+    public String toString(){
+        return "survivorID:"+survivorID+"\n"+
+        "latitude:"+latitude+"\n"+
+        "longitude:"+longitude+"\n";
+    }
     public double getLatitude() {
         return latitude;
     }
