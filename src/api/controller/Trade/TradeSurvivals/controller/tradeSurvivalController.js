@@ -3,6 +3,7 @@ const {
   getTotalPoint,
   subtractResourcesFromInventary,
   addResourceFromInventary,
+  updateInventaryAndReturnInventaryUpdate,
 } = require("../../../../helpers/Trade");
 
 const tradeSurvivalController = async ({ itemsToSend, itemsToRecived }) => {
@@ -71,6 +72,18 @@ const tradeSurvivalController = async ({ itemsToSend, itemsToRecived }) => {
     });
   }
 
+  const updateInventaryFirstSurvival =
+    await updateInventaryAndReturnInventaryUpdate({
+      itemsToUpdate: oldInventaryFirstSurvival.inventaryWithSubstracResources,
+      survivalId: firstSurvival.survivalId,
+    });
+
+  const updateInventarySecondSurvival =
+    await updateInventaryAndReturnInventaryUpdate({
+      itemsToUpdate: oldInventarySecondSurvival.inventaryWithSubstracResources,
+      survivalId: secondSurvival.survivalId,
+    });
+
   const newInventaryFirstSurvival = await addResourceFromInventary({
     survivalId: firstSurvival.Survival.id,
     itemsToRecived: itemsToRecived.items,
@@ -85,11 +98,11 @@ const tradeSurvivalController = async ({ itemsToSend, itemsToRecived }) => {
 
   response.data = {
     firstSurvival: {
-      oldInventary: oldInventaryFirstSurvival.inventaryWithSubstracResources,
+      oldInventary: updateInventaryFirstSurvival,
       newInventary: newInventaryFirstSurvival,
     },
     secondSurvival: {
-      oldInventary: oldInventarySecondSurvival.inventaryWithSubstracResources,
+      oldInventary: updateInventarySecondSurvival,
       newInventary: newInventarySecondSurvival,
     },
   };

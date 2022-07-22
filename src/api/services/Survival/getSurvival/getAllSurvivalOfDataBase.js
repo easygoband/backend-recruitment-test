@@ -1,7 +1,7 @@
 const { survival } = require("../../../../db/models");
 
 const getAllSurvivalInDB = async () => {
-  const searchSurvivals = await survival.findAll();
+  const searchSurvivals = await survival.findAndCountAll();
 
   return searchSurvivals;
 };
