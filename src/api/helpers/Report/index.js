@@ -1,3 +1,13 @@
-const { generatePercentage } = require("./generatePercentage");
+const {
+  getTotalSurvivalNotInfectedAndInfected,
+} = require("./getTotalSurvivalNotInfectedAndInfected");
+const { getAverageForResources } = require("./getAverageForResources");
+const {
+  getAveragePointsLostForSurvival,
+} = require("./getAveragePointsLostForSurvival");
 
-module.exports = { generatePercentage };
+module.exports = {
+  getTotalSurvivalNotInfectedAndInfected,
+  getAveragePointsLostForSurvival,
+  getAverageForResources,
+};
