@@ -105,6 +105,10 @@ The second thing you must have installed on your computer or laptop is postgreSQ
 
 The third thing is to check the _.env.example_ file in which you must enter the environment variables that are shown.
 
+## Documentation
+
+https://documenter.getpostman.com/view/9342429/UzXNUd1W
+
 ## Goodbye
 
 Hi survivor, I hope this information was useful to you, unfortunately I have been infected because the place where, I was sheltering was attacked by a horde of zombies, I could escape but I was infected, so I do not have much time left.
