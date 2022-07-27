@@ -43,7 +43,16 @@ const getAveragePointsLostForSurvival = async ({
 
   const averagePointsForSurvivalInfected = (totalPoints * 1) / totalSurvivals;
 
-  return averagePointsForSurvivalInfected.toFixed(2);
+  const totalPointsLostForSurvivalInfected =
+    (totalPoints * totalSurvivalInfected) / totalSurvivals;
+
+  return {
+    averagePointsForSurvivalInfected:
+      averagePointsForSurvivalInfected.toFixed(2),
+    totalPointsLostForSurvivalInfected:
+      totalPointsLostForSurvivalInfected.toFixed(2),
+    survivalsInfected: totalSurvivalInfected,
+  };
 };
 
 module.exports = { getAveragePointsLostForSurvival };

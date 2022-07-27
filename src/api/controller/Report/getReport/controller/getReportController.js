@@ -28,8 +28,14 @@ const getReportController = async () => {
     return ac;
   }, 0);
 
+  const getInventaryOfInfectedSurvival = inventaries.rows.filter(
+    (inventary) => {
+      return inventary.Survival.isInfected === true;
+    }
+  );
+
   const pointsLostForSurvivalInfected = await getAveragePointsLostForSurvival({
-    survivalAndInventary: inventaries.rows,
+    survivalAndInventary: getInventaryOfInfectedSurvival,
     totalSurvivals: survivals.count,
     totalSurvivalInfected: totalSuvivalInfected,
   });
