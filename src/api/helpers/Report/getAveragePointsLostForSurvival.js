@@ -41,8 +41,7 @@ const getAveragePointsLostForSurvival = async ({
     totalWaterWithPoints +
     totalAmmunitionWithPoints;
 
-  const averagePointsForSurvivalInfected =
-    (totalPoints * totalSurvivalInfected) / totalSurvivals;
+  const averagePointsForSurvivalInfected = (totalPoints * 1) / totalSurvivals;
 
   return averagePointsForSurvivalInfected.toFixed(2);
 };

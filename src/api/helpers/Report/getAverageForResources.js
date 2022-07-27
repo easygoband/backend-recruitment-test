@@ -23,7 +23,10 @@ const getAverageForResources = (SurvivalAndInventary, totalSurvivals) => {
     totalWaterAmount,
     totalSurvivals
   );
-  const Average_Munition_Survival = (totalAmmunitionAmount, totalSurvivals);
+  const Average_Munition_Survival = averageResourceBySurvivals(
+    totalAmmunitionAmount,
+    totalSurvivals
+  );
 
   return {
     Average_Medicine_Survival: Average_Medicine_Survival.toFixed(2),

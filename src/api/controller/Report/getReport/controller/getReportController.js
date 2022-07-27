@@ -37,7 +37,7 @@ const getReportController = async () => {
   return {
     status: 200,
     success: true,
-    message: "Todo bien",
+    message: "Success report",
     data: {
       survivals_infected,
       survivals_not_infected,
