@@ -1,6 +1,11 @@
 const {
   createSurvivalController,
 } = require("./controller/addSurvivalController");
+const { validateInputs } = require("../../../../utils/validateInputs");
+const {
+  actionData,
+  messageData,
+} = require("../../../services/Survival/ValidationRequestSurvival/schemaSurvival");
 
 /**
  *
@@ -11,6 +16,18 @@ const {
 const addSurvival = async (req, res) => {
   try {
     const { name, age, gender, lastLocation, resources } = req.body;
+    const isValidateJson = await validateInputs(
+      { name, age, gender, lastLocation, resources },
+      actionData,
+      messageData
+    );
+    if (!isValidateJson.matched) {
+      return res.status(422).json({
+        status: false,
+        message: isValidateJson.errors,
+      });
+    }
+
     const response = await createSurvivalController({
       name,
       age,

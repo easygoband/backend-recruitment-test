@@ -1,8 +1,26 @@
 const addItemInDatabase = require("../../../services/Item/addItem/addItemInDataBase");
+const { validateInputs } = require("../../../../utils/validateInputs");
+const {
+  actionData,
+  messageData,
+} = require("../../../services/Item/validationRequestItem/schemaItem");
 
 const addItem = async (req, res) => {
   try {
     const { item, point } = req.body;
+
+    const isValidateJson = await validateInputs(
+      { item, point },
+      actionData,
+      messageData
+    );
+    if (!isValidateJson.matched) {
+      return res.status(422).json({
+        status: false,
+        message: isValidateJson.errors,
+      });
+    }
+
     const response = await addItemInDatabase({ product: item, point });
 
     return res.status(201).json({
