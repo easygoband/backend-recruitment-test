@@ -1,11 +1,11 @@
-const updateItemInDB = require("../../../services/Item/updateItem/updateItemOfDataBase");
+const { updateItemController } = require("./controller/updateItemController");
 
 const updateItem = async (req, res) => {
   try {
     const { id } = req.params;
     const params = req.body;
 
-    const response = await updateItemInDB({ id, updateData: params });
+    const response = await updateItemController({ id, updateData: params });
 
     return res.status(200).json({
       success: true,

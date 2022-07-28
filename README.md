@@ -89,28 +89,3 @@ Fork this repo and send us a pull request when you think you are done. We will n
 Just get in touch with your interviewer by email.
 
 **Original test written by [Akita](https://t.co/W47ODZTOAc)**
-
-Hello survivor my name is german I am the one who developed the API that you are about to test.
-And I'm going to guide you so you can run the API, you must follow the following instructions:
-
-## First step
-
-The first thing you should do after cloning the project is to perform an _npm install_.
-
-## Second step
-
-The second thing you must have installed on your computer or laptop is postgreSQL.
-
-## Third step
-
-The third thing is to check the _.env.example_ file in which you must enter the environment variables that are shown.
-
-## Documentation
-
-https://documenter.getpostman.com/view/9342429/UzXNUd1W
-
-## Goodbye
-
-Hi survivor, I hope this information was useful to you, unfortunately I have been infected because the place where, I was sheltering was attacked by a horde of zombies, I could escape but I was infected, so I do not have much time left.
-
-I wish you luck.
