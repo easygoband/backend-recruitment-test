@@ -1,4 +1,5 @@
-const addItemInDatabase = require("../../../services/Item/addItem/addItemInDataBase");
+const { createItemController } = require("./controller/addItemController");
+
 const { validateInputs } = require("../../../../utils/validateInputs");
 const {
   actionData,
@@ -21,7 +22,7 @@ const addItem = async (req, res) => {
       });
     }
 
-    const response = await addItemInDatabase({ product: item, point });
+    const response = await createItemController({ product: item, point });
 
     return res.status(201).json({
       success: true,

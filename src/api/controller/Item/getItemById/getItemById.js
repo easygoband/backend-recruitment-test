@@ -1,15 +1,15 @@
-const getItemByIdInDB = require("../../../services/Item/getItemById/getItemByItemOfDataBase");
+const { getItemByIdController } = require("./controller/getItemByIdController");
 
 const getItemById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const response = await getItemByIdInDB(id);
+    const { message, status, success, data } = await getItemByIdController(id);
 
-    return res.status(200).json({
-      success: true,
-      message: "Item found",
-      data: response,
+    return res.status(status).json({
+      success,
+      message,
+      data,
     });
   } catch (err) {
     return res.status(500).json({

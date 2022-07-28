@@ -1,13 +1,13 @@
-const getAllItemsInDB = require("../../../services/Item/getItem/getItemOfDataBase");
+const { getAllItemsController } = require("./controller/getAllItemController");
 
 const getAllItems = async (req, res) => {
   try {
-    const response = await getAllItemsInDB();
+    const { status, message, success, data } = await getAllItemsController();
 
-    return res.status(200).json({
-      success: true,
-      message: "Items found",
-      data: response,
+    return res.status(status).json({
+      success,
+      message,
+      data,
     });
   } catch (err) {
     return res.status(500).json({

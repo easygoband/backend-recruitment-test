@@ -1,10 +1,10 @@
-const removeItemInDB = require("../../../services/Item/removeItem/removeItemOfDataBase");
+const { removeItemController } = require("./controller/removeItemController");
 
 const removeItem = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const response = await removeItemInDB(id);
+    const response = await removeItemController(id);
 
     return res.status(200).json({
       success: true,
