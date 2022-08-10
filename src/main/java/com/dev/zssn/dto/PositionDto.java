@@ -1,6 +1,6 @@
 package com.dev.zssn.dto;
 
-public class LastPositionDto {
+public class PositionDto {
 
   private String latitude;
   private String longitude;

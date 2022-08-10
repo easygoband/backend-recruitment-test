@@ -7,7 +7,7 @@ public class SurvivorDto {
   private String name;
   private String age;
   private String gender;
-  private LastPositionDto lastPosition;
+  private PositionDto lastPosition;
   private Boolean isInfected;
   private List<InventoryDto> inventory;
 
@@ -35,11 +35,11 @@ public class SurvivorDto {
     this.gender = gender;
   }
 
-  public LastPositionDto getLastPosition() {
+  public PositionDto getLastPosition() {
     return lastPosition;
   }
 
-  public void setLastPosition(LastPositionDto lastPosition) {
+  public void setLastPosition(PositionDto lastPosition) {
     this.lastPosition = lastPosition;
   }
 
