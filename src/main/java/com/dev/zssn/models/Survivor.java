@@ -1,8 +1,12 @@
 package com.dev.zssn.models;
 
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -18,6 +22,12 @@ public class Survivor {
 
   @OneToOne()
   private Position lastPosition;
+
+  @Column(name="is_infected")
+  private Boolean isInfected;
+
+  @OneToMany()
+  private List<SurvivorAsset> inventory;
 
   public Long getId() {
     return id;
@@ -57,6 +67,22 @@ public class Survivor {
 
   public void setLastPosition(Position lastPosition) {
     this.lastPosition = lastPosition;
+  }
+
+  public Boolean getIsInfected() {
+    return isInfected;
+  }
+
+  public void setIsInfected(Boolean isInfected) {
+    this.isInfected = isInfected;
+  }
+
+  public List<SurvivorAsset> getInventory() {
+    return inventory;
+  }
+
+  public void setInventory(List<SurvivorAsset> inventory) {
+    this.inventory = inventory;
   }
 
 }
