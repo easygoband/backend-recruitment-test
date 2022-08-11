@@ -20,6 +20,8 @@ public class Survivor {
 
   private String gender;
 
+  private Integer infectionReports;
+
   @OneToOne()
   private Position lastPosition;
 
@@ -83,6 +85,14 @@ public class Survivor {
 
   public void setInventory(List<SurvivorAsset> inventory) {
     this.inventory = inventory;
+  }
+
+  public Integer getInfectionReports() {
+    return infectionReports;
+  }
+
+  public void setInfectionReports(Integer infectionReports) {
+    this.infectionReports = infectionReports;
   }
 
 }
