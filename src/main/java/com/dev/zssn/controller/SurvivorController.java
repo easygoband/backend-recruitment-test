@@ -24,7 +24,7 @@ class SurvivorController {
 
   private final SurvivorService service;
 
-  SurvivorController(SurvivorService repository) {
+  public SurvivorController(SurvivorService repository) {
     this.service = repository;
   }
 

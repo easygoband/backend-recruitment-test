@@ -30,7 +30,7 @@ public class SurvivorService {
   private final SurvivorRepository survivorRepository;
   private final AssetRepository assetRepository;
   
-  SurvivorService(
+  public SurvivorService(
     final SurvivorAssetRepository survivorAssetRepository,
     final PositionRepository positionRepository,
     final SurvivorRepository survivorRepository,
