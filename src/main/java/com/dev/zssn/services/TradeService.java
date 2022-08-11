@@ -38,19 +38,19 @@ public class TradeService {
 
   private Trader getTrader(final TraderDto trader) {
     final Survivor survivor = survivorRepository.findById(trader.getSurvivorId()).get();
-    final List<TradeAsset> assetTrades = getAssetTrades(survivor, trader);
-    return new Trader(survivor.getId(), assetTrades, survivor.getIsInfected());
+    final List<TradeAsset> tradeAssets = getTradeAssets(survivor, trader);
+    return new Trader(survivor.getId(), tradeAssets, survivor.getIsInfected());
   }
 
-  private List<TradeAsset> getAssetTrades(final Survivor survivor, final TraderDto trader) {
+  private List<TradeAsset> getTradeAssets(final Survivor survivor, final TraderDto trader) {
     return survivor.getInventory()
     .stream()
-    .map(asset -> getAssetTrade(asset, trader.getItems()))
+    .map(asset -> getTradeAsset(asset, trader.getItems()))
     .filter(i -> i != null)
     .collect(Collectors.toList());
   }
 
-  private TradeAsset getAssetTrade (final SurvivorAsset asset, final List<InventoryDto> tradeItems) {
+  private TradeAsset getTradeAsset (final SurvivorAsset asset, final List<InventoryDto> tradeItems) {
     final List<InventoryDto> items = tradeItems
     .stream()
     .filter(e -> e.getAsset().getName().equals(asset.getAsset().getName()))
