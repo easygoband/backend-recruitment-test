@@ -4,17 +4,17 @@ import java.util.List;
 
 public class SurvivorTrade {
 
-  private List<AssetTrade> assets;
+  private List<TradeAsset> assets;
   private Long survivorId;
   private boolean isInfected;
 
-  public SurvivorTrade(Long survivorId, List<AssetTrade> assets, boolean isInfected) {
+  public SurvivorTrade(Long survivorId, List<TradeAsset> assets, boolean isInfected) {
     this.survivorId = survivorId;
     this.assets = assets;
     this.isInfected = isInfected;
   }
 
-  public List<AssetTrade> getAssets() {
+  public List<TradeAsset> getAssets() {
     return assets;
   }
 

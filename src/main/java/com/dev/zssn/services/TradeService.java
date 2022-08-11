@@ -13,7 +13,7 @@ import com.dev.zssn.dto.TraderDto;
 import com.dev.zssn.models.Survivor;
 import com.dev.zssn.models.SurvivorAsset;
 import com.dev.zssn.repository.SurvivorRepository;
-import com.dev.zssn.trade.AssetTrade;
+import com.dev.zssn.trade.TradeAsset;
 import com.dev.zssn.trade.SurvivorTrade;
 import com.dev.zssn.trade.Trade;
 
@@ -38,11 +38,11 @@ public class TradeService {
 
   private SurvivorTrade getSurvivorTrade(final TraderDto trader) {
     final Survivor survivor = survivorRepository.findById(trader.getSurvivorId()).get();
-    final List<AssetTrade> assetTrades = getAssetTrades(survivor, trader);
+    final List<TradeAsset> assetTrades = getAssetTrades(survivor, trader);
     return new SurvivorTrade(survivor.getId(), assetTrades, survivor.getIsInfected());
   }
 
-  private List<AssetTrade> getAssetTrades(final Survivor survivor, final TraderDto trader) {
+  private List<TradeAsset> getAssetTrades(final Survivor survivor, final TraderDto trader) {
     return survivor.getInventory()
     .stream()
     .map(asset -> getAssetTrade(asset, trader.getItems()))
@@ -50,12 +50,12 @@ public class TradeService {
     .collect(Collectors.toList());
   }
 
-  private AssetTrade getAssetTrade (final SurvivorAsset asset, final List<InventoryDto> tradeItems) {
+  private TradeAsset getAssetTrade (final SurvivorAsset asset, final List<InventoryDto> tradeItems) {
     final List<InventoryDto> items = tradeItems
     .stream()
     .filter(e -> e.getAsset().getName().equals(asset.getAsset().getName()))
     .collect(Collectors.toList());
-    return items.isEmpty() ? null : new AssetTrade(asset.getAsset(), asset.getAmount(), items.get(0).getAmount());
+    return items.isEmpty() ? null : new TradeAsset(asset.getAsset(), asset.getAmount(), items.get(0).getAmount());
   }
 
 }

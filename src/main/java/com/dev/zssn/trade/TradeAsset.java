@@ -2,12 +2,12 @@ package com.dev.zssn.trade;
 
 import com.dev.zssn.models.Asset;
 
-public class AssetTrade {
+public class TradeAsset {
   private Asset asset;
   private Integer inventoryAmount;
   private Integer tradeAmount;
 
-  public AssetTrade(Asset asset, Integer inventoryAmount, Integer tradeAmount) {
+  public TradeAsset(Asset asset, Integer inventoryAmount, Integer tradeAmount) {
     this.asset = asset;
     this.inventoryAmount = inventoryAmount;
     this.tradeAmount = tradeAmount;
