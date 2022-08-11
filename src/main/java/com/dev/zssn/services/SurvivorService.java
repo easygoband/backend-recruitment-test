@@ -59,6 +59,13 @@ public class SurvivorService {
     return converter.toDto(saved);
   }
 
+  public PositionDto updateSurvivorPosition(final Long survivorId, final PositionDto positionDto) {
+    final Survivor survivor = this.survivorRepository.findById(survivorId).get();
+    final PositionConverter converter = new PositionConverter();
+    final Position position = this.positionRepository.save(converter.updateModel(survivor.getLastPosition(), positionDto));
+    return converter.toDto(position);
+  }
+
   private Position savePosition(final PositionDto positionDto) {
     final PositionConverter positionConverter = new PositionConverter();
     final Position position = positionConverter.toModel(positionDto);
@@ -84,7 +91,7 @@ public class SurvivorService {
 
   private Asset getAsset(final AssetDto assetDto) {
     final List<Asset> list = this.assetRepository.findByName(assetDto.getName());
-    return  list != null && !list.isEmpty() ? list.get(0) : null;
+    return list != null && !list.isEmpty() ? list.get(0) : null;
   }
   
 }

@@ -18,4 +18,10 @@ public class PositionConverter {
     dto.setLongitude(position.getLongitude());
     return dto;
   }
+
+  public Position updateModel(final Position position, final PositionDto dto) {
+    position.setLatitude(dto.getLatitude());
+    position.setLongitude(dto.getLongitude());
+    return position;
+  }
 }
