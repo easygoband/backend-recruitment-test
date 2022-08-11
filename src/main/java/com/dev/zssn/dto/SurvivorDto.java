@@ -4,12 +4,21 @@ import java.util.List;
 
 public class SurvivorDto {
 
+  private Long id;
   private String name;
   private String age;
   private String gender;
   private PositionDto lastPosition;
   private Boolean isInfected;
   private List<InventoryDto> inventory;
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }  
 
   public String getName() {
     return name;

@@ -25,6 +25,7 @@ public class SurvivorConverter {
 
   public SurvivorDto toDto(final Survivor survivor) {
     final SurvivorDto dto = new SurvivorDto();
+    dto.setId(survivor.getId());
     dto.setName(survivor.getName());
     dto.setAge(survivor.getAge());
     dto.setGender(survivor.getGender());
