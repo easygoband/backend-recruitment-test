@@ -42,7 +42,7 @@ class SurvivorController {
   public ResponseEntity<SurvivorDto> registerSurvivor(@RequestBody SurvivorDto survivor) {
     try {
       final SurvivorDto savedSurvivor = service.registerSurvivor(survivor);
-      return new ResponseEntity<>(savedSurvivor, HttpStatus.OK);
+      return new ResponseEntity<>(savedSurvivor, HttpStatus.CREATED);
     } catch (Exception e) {
       LOGGER.error(e.getMessage());
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
