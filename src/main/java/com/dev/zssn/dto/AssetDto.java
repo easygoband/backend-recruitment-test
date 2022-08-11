@@ -3,7 +3,7 @@ package com.dev.zssn.dto;
 public class AssetDto {
 
   private String name;
-  private String points;
+  private Integer points;
 
   public String getName() {
     return name;
@@ -13,11 +13,11 @@ public class AssetDto {
     this.name = name;
   }
 
-  public String getPoints() {
+  public Integer getPoints() {
     return points;
   }
 
-  public void setPoints(String points) {
+  public void setPoints(Integer points) {
     this.points = points;
   }
 
