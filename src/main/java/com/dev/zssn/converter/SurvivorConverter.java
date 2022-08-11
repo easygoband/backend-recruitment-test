@@ -20,6 +20,7 @@ public class SurvivorConverter {
     survivor.setLastPosition(position);
     survivor.setIsInfected(false);
     survivor.setInventory(inventory);
+    survivor.setInfectionReports(0);
     return survivor;
   }
 

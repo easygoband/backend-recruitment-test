@@ -64,4 +64,15 @@ class SurvivorController {
     }
   }
 
+  @PostMapping("/report-infection/{survivorId}")
+  public ResponseEntity<SurvivorDto> reportInfection(@PathVariable final Long survivorId) {
+    try {
+      final SurvivorDto survivor = this.service.reportInfection(survivorId);
+      return new ResponseEntity<>(survivor, HttpStatus.OK);
+    } catch (Exception e) {
+      LOGGER.error(e.getMessage());
+      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
 }

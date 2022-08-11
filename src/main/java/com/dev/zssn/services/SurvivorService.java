@@ -66,6 +66,21 @@ public class SurvivorService {
     return converter.toDto(position);
   }
 
+  public SurvivorDto reportInfection(final Long survivorId) {
+    final Survivor survivor = this.survivorRepository.findById(survivorId).get();
+    final Integer reports = survivor.getInfectionReports();
+    survivor.setInfectionReports((reports == null ? 0 : reports)+ 1);
+    survivor.setIsInfected(survivor.getInfectionReports() >= 3);
+    this.survivorRepository.save(survivor);
+    return this.getSurvivor(survivorId);
+  }
+
+  private SurvivorDto getSurvivor(final Long survivorId) {
+    final Survivor survivor = this.survivorRepository.findById(survivorId).get();
+    final SurvivorConverter converter = new SurvivorConverter();
+    return converter.toDto(survivor);
+  }
+
   private Position savePosition(final PositionDto positionDto) {
     final PositionConverter positionConverter = new PositionConverter();
     final Position position = positionConverter.toModel(positionDto);
