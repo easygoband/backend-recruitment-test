@@ -13,7 +13,7 @@ public class Asset {
   @Column(unique=true)
   private String name;
 
-  private String points;
+  private Integer points;
 
   public Long getId() {
     return id;
@@ -31,12 +31,17 @@ public class Asset {
     this.name = name;
   }
 
-  public String getPoints() {
+  public Integer getPoints() {
     return points;
   }
 
-  public void setPoints(String points) {
+  public void setPoints(Integer points) {
     this.points = points;
+  }
+
+  @Override
+  public String toString() {
+    return "[id=" + id + ", name=" + name + ", points=" + points + "]";
   }
 
 }
