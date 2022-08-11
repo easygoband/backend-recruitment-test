@@ -2,13 +2,13 @@ package com.dev.zssn.trade;
 
 import java.util.List;
 
-public class SurvivorTrade {
+public class Trader {
 
   private List<TradeAsset> assets;
   private Long survivorId;
   private boolean isInfected;
 
-  public SurvivorTrade(Long survivorId, List<TradeAsset> assets, boolean isInfected) {
+  public Trader(Long survivorId, List<TradeAsset> assets, boolean isInfected) {
     this.survivorId = survivorId;
     this.assets = assets;
     this.isInfected = isInfected;

@@ -2,19 +2,19 @@ package com.dev.zssn.trade;
 
 public class Trade {
 
-  private SurvivorTrade sender;
-  private SurvivorTrade receiver;
+  private Trader sender;
+  private Trader receiver;
 
-  public Trade(SurvivorTrade sender, SurvivorTrade receiver) {
+  public Trade(Trader sender, Trader receiver) {
     this.sender = sender;
     this.receiver = receiver;
   }
 
-  public SurvivorTrade getSender() {
+  public Trader getSender() {
     return sender;
   }
 
-  public SurvivorTrade getReceiver() {
+  public Trader getReceiver() {
     return receiver;
   }
 

@@ -14,7 +14,7 @@ import com.dev.zssn.models.Survivor;
 import com.dev.zssn.models.SurvivorAsset;
 import com.dev.zssn.repository.SurvivorRepository;
 import com.dev.zssn.trade.TradeAsset;
-import com.dev.zssn.trade.SurvivorTrade;
+import com.dev.zssn.trade.Trader;
 import com.dev.zssn.trade.Trade;
 
 @Service
@@ -31,15 +31,15 @@ public class TradeService {
   }
 
   public void trade(final TradeDto tradeDto) {
-    final SurvivorTrade sender = this.getSurvivorTrade(tradeDto.getSender());
-    final SurvivorTrade receiver = this.getSurvivorTrade(tradeDto.getReceiver());
+    final Trader sender = this.getTrader(tradeDto.getSender());
+    final Trader receiver = this.getTrader(tradeDto.getReceiver());
     final Trade trade = new Trade(sender, receiver);
   }
 
-  private SurvivorTrade getSurvivorTrade(final TraderDto trader) {
+  private Trader getTrader(final TraderDto trader) {
     final Survivor survivor = survivorRepository.findById(trader.getSurvivorId()).get();
     final List<TradeAsset> assetTrades = getAssetTrades(survivor, trader);
-    return new SurvivorTrade(survivor.getId(), assetTrades, survivor.getIsInfected());
+    return new Trader(survivor.getId(), assetTrades, survivor.getIsInfected());
   }
 
   private List<TradeAsset> getAssetTrades(final Survivor survivor, final TraderDto trader) {
