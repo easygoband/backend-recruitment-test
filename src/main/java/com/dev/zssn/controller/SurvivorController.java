@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,7 +50,7 @@ class SurvivorController {
     }
   }
 
-  @PostMapping("/update-position/{survivorId}")
+  @PutMapping("/update-position/{survivorId}")
   public ResponseEntity<PositionDto> updateSurvivorPosition(
     @PathVariable final Long survivorId,
     @RequestBody final PositionDto position
