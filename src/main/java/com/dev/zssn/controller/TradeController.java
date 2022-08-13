@@ -17,13 +17,13 @@ import com.dev.zssn.services.TradeService;
 @RestController
 public class TradeController {
 
+  final Logger LOGGER = LoggerFactory.getLogger(TradeController.class);
+
   final TradeService tradeService;
 
   public TradeController(final TradeService tradeService) {
     this.tradeService = tradeService;
   }
-
-  final Logger LOGGER = LoggerFactory.getLogger(TradeController.class);
 
   @PostMapping("trade")
   public ResponseEntity<List<SurvivorDto>> trade(@RequestBody final TradeDto trade) {
