@@ -41,7 +41,10 @@ public class SurvivorService {
   public List<SurvivorDto> all() {
     final SurvivorConverter converter = new SurvivorConverter();
     List<Survivor> survivors = survivorRepository.findAll();
-    List<SurvivorDto> dto = survivors.stream().map(s -> converter.toDto(s)).collect(Collectors.toList());
+    List<SurvivorDto> dto = survivors
+    .stream()
+    .map(s -> converter.toDto(s))
+    .collect(Collectors.toList());
     return dto;
   }
 
