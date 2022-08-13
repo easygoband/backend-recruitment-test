@@ -1,5 +1,8 @@
 package com.dev.zssn.services;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.dev.zssn.converter.AssetConverter;
@@ -14,6 +17,15 @@ public class AssetService {
 
   public AssetService(final AssetRepository assetRepository) {
     this.assetRepository = assetRepository;
+  }
+
+  public List<AssetDto> all() {
+    final AssetConverter converter = new AssetConverter();
+    return this.assetRepository
+    .findAll()
+    .stream()
+    .map(a -> converter.toDto(a))
+    .collect(Collectors.toList());
   }
 
   public AssetDto addAsset(final AssetDto assetDto) {
