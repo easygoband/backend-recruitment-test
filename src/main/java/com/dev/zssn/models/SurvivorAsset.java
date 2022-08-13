@@ -1,5 +1,6 @@
 package com.dev.zssn.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,7 +11,7 @@ public class SurvivorAsset {
 
   private @Id @GeneratedValue Long id;
 
-  @ManyToOne()
+  @ManyToOne(cascade = {CascadeType.ALL})
   private Asset asset;
 
   private Integer amount;

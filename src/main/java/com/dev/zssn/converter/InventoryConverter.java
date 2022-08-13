@@ -14,6 +14,13 @@ public class InventoryConverter {
     return inventory;
   }
 
+  public SurvivorAsset toModel(final Asset asset, final Integer amount) {
+    final SurvivorAsset inventory = new SurvivorAsset();
+    inventory.setAsset(asset);
+    inventory.setAmount(amount);
+    return inventory;
+  }
+
   public InventoryDto toDto(final SurvivorAsset inventory) {
     final InventoryDto dto = new InventoryDto();
     final AssetConverter assetConverter = new AssetConverter();

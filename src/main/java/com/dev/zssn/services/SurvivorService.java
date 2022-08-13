@@ -19,24 +19,20 @@ import com.dev.zssn.models.Survivor;
 import com.dev.zssn.models.SurvivorAsset;
 import com.dev.zssn.repository.AssetRepository;
 import com.dev.zssn.repository.PositionRepository;
-import com.dev.zssn.repository.SurvivorAssetRepository;
 import com.dev.zssn.repository.SurvivorRepository;
 
 @Service
 public class SurvivorService {
 
-  private final SurvivorAssetRepository survivorAssetRepository;
   private final PositionRepository positionRepository;
   private final SurvivorRepository survivorRepository;
   private final AssetRepository assetRepository;
-  
+
   public SurvivorService(
-    final SurvivorAssetRepository survivorAssetRepository,
     final PositionRepository positionRepository,
     final SurvivorRepository survivorRepository,
     final AssetRepository assetRepository
   ) {
-    this.survivorAssetRepository = survivorAssetRepository;
     this.positionRepository = positionRepository;
     this.survivorRepository = survivorRepository;
     this.assetRepository = assetRepository;
@@ -51,23 +47,51 @@ public class SurvivorService {
 
   public SurvivorDto registerSurvivor(final SurvivorDto dto) {
     final Position position = this.savePosition(dto.getLastPosition());
-    final List<SurvivorAsset> inventory = this.saveInventory(dto.getInventory());
+    final List<SurvivorAsset> inventory = this.getInventory(dto.getInventory());
 
     final SurvivorConverter converter = new SurvivorConverter();
     final Survivor survivor = converter.toModel(dto, position, inventory);
+    return saveSurvivor(survivor);
+  }
+
+  private List<SurvivorAsset> getInventory(final List<InventoryDto> inventoryDto) {
+    final InventoryConverter converter = new InventoryConverter();
+    return inventoryDto == null ? new ArrayList<>() :
+    inventoryDto
+    .stream()
+    .map(i -> {
+      final Asset asset = this.getAssetByName(i.getAsset());
+      return asset == null ? null: converter.toModel(i, asset);
+    })
+    .filter(i -> i != null)
+    .collect(Collectors.toList());
+  }
+
+  private SurvivorDto saveSurvivor(final Survivor survivor) {
+    final SurvivorConverter converter = new SurvivorConverter();
     final Survivor saved = survivorRepository.save(survivor);
     return converter.toDto(saved);
   }
 
+  public SurvivorDto addInventory(final Long survivorId, final List<SurvivorAsset> inventory) {
+    final Survivor survivor = this.getSurvivorById(survivorId);
+    survivor.setInventory(inventory);
+    return this.saveSurvivor(survivor);
+  }
+
+  public Survivor getSurvivorById(final Long survivorId) {
+    return this.survivorRepository.findById(survivorId).get();
+  }
+
   public PositionDto updateSurvivorPosition(final Long survivorId, final PositionDto positionDto) {
-    final Survivor survivor = this.survivorRepository.findById(survivorId).get();
+    final Survivor survivor = this.getSurvivorById(survivorId);
     final PositionConverter converter = new PositionConverter();
     final Position position = this.positionRepository.save(converter.updateModel(survivor.getLastPosition(), positionDto));
     return converter.toDto(position);
   }
 
   public SurvivorDto reportInfection(final Long survivorId) {
-    final Survivor survivor = this.survivorRepository.findById(survivorId).get();
+    final Survivor survivor = this.getSurvivorById(survivorId);
     final Integer reports = survivor.getInfectionReports();
     survivor.setInfectionReports((reports == null ? 0 : reports)+ 1);
     survivor.setIsInfected(survivor.getInfectionReports() >= 3);
@@ -76,7 +100,7 @@ public class SurvivorService {
   }
 
   private SurvivorDto getSurvivor(final Long survivorId) {
-    final Survivor survivor = this.survivorRepository.findById(survivorId).get();
+    final Survivor survivor = this.getSurvivorById(survivorId);
     final SurvivorConverter converter = new SurvivorConverter();
     return converter.toDto(survivor);
   }
@@ -87,26 +111,9 @@ public class SurvivorService {
     return positionRepository.save(position);
   }
 
-  private List<SurvivorAsset> saveInventory(final List<InventoryDto> inventoryDto) {
-    return inventoryDto == null ? new ArrayList<>() :
-    inventoryDto.stream().map(i -> this.saveSurvivorAsset(i))
-    .filter(i -> i != null)
-    .collect(Collectors.toList());
-  }
-
-  private SurvivorAsset saveSurvivorAsset(final InventoryDto inventoryDto) {
-    final InventoryConverter converter = new InventoryConverter();
-    final Asset asset = this.getAsset(inventoryDto.getAsset());
-    if (asset != null) {
-      final SurvivorAsset survivorAsset = converter.toModel(inventoryDto, asset);
-      return survivorAssetRepository.save(survivorAsset);
-    }
-    return null;
-  }
-
-  private Asset getAsset(final AssetDto assetDto) {
+  private Asset getAssetByName(final AssetDto assetDto) {
     final List<Asset> list = this.assetRepository.findByName(assetDto.getName());
     return list != null && !list.isEmpty() ? list.get(0) : null;
   }
-  
+
 }

@@ -2,6 +2,7 @@ package com.dev.zssn.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +29,7 @@ public class Survivor {
   @Column(name="is_infected")
   private Boolean isInfected;
 
-  @OneToMany()
+  @OneToMany(cascade = {CascadeType.ALL})
   private List<SurvivorAsset> inventory;
 
   public Long getId() {
