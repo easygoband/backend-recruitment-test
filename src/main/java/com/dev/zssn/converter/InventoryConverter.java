@@ -30,4 +30,11 @@ public class InventoryConverter {
     return dto;
   }
 
+  public InventoryDto toDto(final AssetDto asset, final int amount) {
+    final InventoryDto dto = new InventoryDto();
+    dto.setAsset(asset);
+    dto.setAmount(amount);
+    return dto;
+  }
+
 }
