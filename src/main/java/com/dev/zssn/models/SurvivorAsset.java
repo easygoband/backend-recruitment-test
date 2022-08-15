@@ -40,6 +40,4 @@ public class SurvivorAsset {
     this.amount = amount;
   }
 
-  
-
 }
