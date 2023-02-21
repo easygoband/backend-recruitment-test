@@ -15,6 +15,7 @@ import java.util.UUID;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class Location {
 
     @Id
