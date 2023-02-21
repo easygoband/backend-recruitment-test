@@ -22,36 +22,26 @@ public class InfectedRegisterService {
         return infectedRegisterRepository.findAll();
     }
 
-    public InfectedRegister findBySurvivorId(String id) {
+    public InfectedRegister findBySurvivorId(UUID id) {
         if (id == null) throw new IllegalStateException("id can't be null");
-        try {
-            UUID uuid = UUID.fromString(id);
-            var svr = infectedRegisterRepository.findById(uuid);
-            if (svr.isPresent()) return svr.get();
-            else throw new IllegalStateException("User with ID " + id + "not exits");
-        } catch (Exception e) {
-            throw new IllegalStateException("ID format error");
-        }
+        var svr = infectedRegisterRepository.findById(id);
+        if (svr.isPresent()) return svr.get();
+        else throw new IllegalStateException("User with ID " + id + "not exits");
     }
 
-    public InfectedRegister updaterUserInfectedAlerts(String id) {
+    public InfectedRegister updaterUserInfectedAlerts(UUID id) {
         if (id == null) throw new IllegalStateException("id can't be null");
-        try {
-            UUID uuid = UUID.fromString(id);
-            var found = infectedRegisterRepository.findById(uuid);
-            if (found.isPresent()) {
-                InfectedRegister register = found.get();
-                register.setInfected_alerts(register.getInfected_alerts() + 1);
+        var found = infectedRegisterRepository.findById(id);
+        if (found.isPresent()) {
+            InfectedRegister register = found.get();
+            register.setInfected_alerts(register.getInfected_alerts() + 1);
 
-                if (register.getInfected_alerts() >= MAX_INFECTED_ALERTS) register.setInfected(true);
-                
-                infectedRegisterRepository.save(register);
+            if (register.getInfected_alerts() >= MAX_INFECTED_ALERTS) register.setInfected(true);
 
-                return register;
-            } else throw new IllegalStateException("User with ID " + id + "not exits");
-        } catch (Exception e) {
-            throw new IllegalStateException("ID format error");
-        }
+            infectedRegisterRepository.save(register);
+
+            return register;
+        } else throw new IllegalStateException("User with ID " + id + "not exits");
     }
 
     public InfectedRegister createInfectedRegister(Survivor survivor) {
