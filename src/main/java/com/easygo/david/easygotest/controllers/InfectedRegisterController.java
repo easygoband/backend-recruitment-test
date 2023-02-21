@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/survivors/infected")
@@ -25,12 +26,12 @@ public class InfectedRegisterController {
     }
 
     @GetMapping("/{user_id}")
-    ResponseEntity<InfectedRegister> getSurvivorById(@PathVariable("user_id") String id) {
+    ResponseEntity<InfectedRegister> getSurvivorById(@PathVariable("user_id") UUID id) {
         return new ResponseEntity<>(infectedRegisterService.findBySurvivorId(id), HttpStatus.OK);
     }
 
     @PutMapping("/{user_id}")
-    ResponseEntity<InfectedRegister> updateUserInfectedAlert(@PathVariable("user_id") String id) {
+    ResponseEntity<InfectedRegister> updateUserInfectedAlert(@PathVariable("user_id") UUID id) {
         return new ResponseEntity<>(infectedRegisterService.updaterUserInfectedAlerts(id), HttpStatus.OK);
     }
 }

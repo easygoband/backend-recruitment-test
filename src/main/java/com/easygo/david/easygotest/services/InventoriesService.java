@@ -43,6 +43,10 @@ public class InventoriesService {
             throw new IllegalStateException("id not found");
     }
 
+    public SurvivorInventory updateInventoryValues(SurvivorInventory survivorInventory) {
+        return survivorInventoryRepository.save(survivorInventory);
+    }
+
     public void createInventoryForUser(Survivor survivor, NewSurvivorRequest requestBody) {
         if (survivor == null) throw new IllegalStateException("Survivor can't be null");
         SurvivorInventory survivorInventory = new SurvivorInventory(survivor);
@@ -75,7 +79,6 @@ public class InventoriesService {
         InventoryItemRecord record = new InventoryItemRecord(quantity, item, inventory);
         inventoryItemRecordRepository.save(record);
     }
-
 
     public void deleteInventory(UUID id) {
         if (id == null) throw new IllegalStateException("ID can't be null");
