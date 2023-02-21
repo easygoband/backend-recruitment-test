@@ -56,6 +56,7 @@ public class SurvivorsController {
     @DeleteMapping("/{user_id}")
     ResponseEntity<ResponseAction> deleteExistingSurvivor(@PathVariable("user_id") String id) {
         locationsService.deleteSurvivorLocation(id);
+        infectedRegisterService.deleteInfectedRegister(id);
         inventoriesService.deleteInventory(id);
         survivorsService.deleteSurvivor(id);
         return new ResponseEntity<>(new ResponseAction("User deleted",id), HttpStatus.OK);
