@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/survivors/items")
-@Tag(name = "Items Controller", description = "This Controller contains the endpoint getting the registered items for trade.")
+@Tag(name = "Items Controller", description = "This Controller contains the endpoint for getting the registered items for trade.")
 @AllArgsConstructor
 public class ItemsController {
     @Autowired
