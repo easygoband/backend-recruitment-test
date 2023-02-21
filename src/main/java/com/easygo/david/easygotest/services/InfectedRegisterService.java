@@ -41,9 +41,10 @@ public class InfectedRegisterService {
             var found = infectedRegisterRepository.findById(uuid);
             if (found.isPresent()) {
                 InfectedRegister register = found.get();
-                if (register.getInfected_alerts() > MAX_INFECTED_ALERTS) register.setInfected(true);
-
                 register.setInfected_alerts(register.getInfected_alerts() + 1);
+
+                if (register.getInfected_alerts() >= MAX_INFECTED_ALERTS) register.setInfected(true);
+                
                 infectedRegisterRepository.save(register);
 
                 return register;
@@ -56,7 +57,7 @@ public class InfectedRegisterService {
     public InfectedRegister createInfectedRegister(Survivor survivor) {
         if (survivor == null) throw new IllegalStateException("Survivor can't be null");
         InfectedRegister register = new InfectedRegister(survivor);
-        System.out.println(register);
+        register.setSurvivor_id(survivor.getId());
         return infectedRegisterRepository.save(register);
     }
 
