@@ -1,6 +1,7 @@
 package com.easygo.david.easygotest.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -30,6 +31,7 @@ public class InventoryItemRecord {
     @ManyToOne
     @JoinColumn(name="survivor_id", nullable=false)
     @NonNull
+    @JsonIgnore
     private SurvivorInventory survivorInventory;
 
     @Override

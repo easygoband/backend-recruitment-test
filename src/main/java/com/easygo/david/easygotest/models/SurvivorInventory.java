@@ -21,7 +21,6 @@ public class SurvivorInventory {
     UUID survivor_id;
 
     @OneToOne
-    @JsonIgnore
     @JoinColumn(name = "id")
     @NonNull
     private Survivor survivor;
@@ -30,7 +29,6 @@ public class SurvivorInventory {
 
     @OneToMany(mappedBy="survivorInventory")
     @ToString.Exclude
-    @JsonIgnore
     private Set<InventoryItemRecord> inventory_item;
 
     @Override
