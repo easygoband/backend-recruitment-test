@@ -17,17 +17,17 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/survivors/inventory")
 @AllArgsConstructor
-public class inventoryController {
+public class InventoryController {
     @Autowired
     private final InventoriesService inventoriesService;
 
     @GetMapping()
-    ResponseEntity<List<SurvivorInventory>> getUsersLastLocation() {
+    ResponseEntity<List<SurvivorInventory>> getAllInventories() {
         return new ResponseEntity<>(inventoriesService.getAllInventories(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{user_id}")
-    ResponseEntity<SurvivorInventory> getUserLastLocation(@PathVariable("user_id") String id) {
+    ResponseEntity<SurvivorInventory> getSingleSurvivorInventory(@PathVariable("user_id") String id) {
         return new ResponseEntity<>(inventoriesService.getSingleInventory(UUID.fromString(id)), HttpStatus.OK);
     }
 }

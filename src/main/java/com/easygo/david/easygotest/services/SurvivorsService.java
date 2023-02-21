@@ -57,13 +57,13 @@ public class SurvivorsService {
         }
     }
 
-    public void deleteSurvivor(String id) {
+    public void deleteSurvivor(UUID id) {
         if (id == null) throw new IllegalStateException("ID can't be null");
         try {
-            UUID uuid = UUID.fromString(id);
-            survivorsRepository.deleteById(uuid);
+//            UUID uuid = UUID.fromString(id);
+            survivorsRepository.deleteById(id);
         } catch (Exception e) {
-            throw new IllegalStateException("ID format error");
+            e.printStackTrace();
         }
     }
 }

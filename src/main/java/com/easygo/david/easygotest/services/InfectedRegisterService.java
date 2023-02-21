@@ -61,11 +61,11 @@ public class InfectedRegisterService {
         return infectedRegisterRepository.save(register);
     }
 
-    public void deleteInfectedRegister(String id) {
+    public void deleteInfectedRegister(UUID id) {
         if (id == null) throw new IllegalStateException("ID can't be null");
         try {
-            UUID uuid = UUID.fromString(id);
-            infectedRegisterRepository.deleteById(uuid);
+//            UUID uuid = UUID.fromString(id);
+            infectedRegisterRepository.deleteById(id);
         } catch (Exception e) {
             throw new IllegalStateException("ID format error");
         }

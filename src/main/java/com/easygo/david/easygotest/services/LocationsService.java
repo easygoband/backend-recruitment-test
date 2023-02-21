@@ -58,11 +58,11 @@ public class LocationsService {
             throw new IllegalStateException("id not found");
     }
 
-    public void deleteSurvivorLocation(String id) {
+    public void deleteSurvivorLocation(UUID id) {
         if (id == null) throw new IllegalStateException("ID can't be null");
         try {
-            UUID uuid = UUID.fromString(id);
-            locationsRepository.deleteById(uuid);
+//            UUID uuid = UUID.fromString(id);
+            locationsRepository.deleteById(id);
         } catch (Exception e) {
             throw new IllegalStateException("ID format error");
         }

@@ -1,9 +1,11 @@
 package com.easygo.david.easygotest.services;
 
 import com.easygo.david.easygotest.controllers.request.NewSurvivorRequest;
-import com.easygo.david.easygotest.models.*;
+import com.easygo.david.easygotest.models.InventoryItemRecord;
+import com.easygo.david.easygotest.models.Item;
+import com.easygo.david.easygotest.models.Survivor;
+import com.easygo.david.easygotest.models.SurvivorInventory;
 import com.easygo.david.easygotest.repositories.InventoryItemRecordRepository;
-import com.easygo.david.easygotest.repositories.ItemsRepository;
 import com.easygo.david.easygotest.repositories.SurvivorInventoryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 @Service
@@ -26,8 +27,6 @@ public class InventoriesService {
     private final SurvivorInventoryRepository survivorInventoryRepository;
     @Autowired
     private final InventoryItemRecordRepository inventoryItemRecordRepository;
-    private final ItemsRepository itemsRepository;
-
 
     public List<SurvivorInventory> getAllInventories() {
         return survivorInventoryRepository.findAll();
@@ -55,19 +54,21 @@ public class InventoriesService {
         var fields = requestBody.getClass().getDeclaredFields();
         for (Field field : fields) {
             switch (field.getName()) {
-                case "water" -> saveItemOnInventoryRecord(totalPoints,field.getName(), requestBody::getWater, survivorInventory);
-                case "food" -> saveItemOnInventoryRecord(totalPoints,field.getName(), requestBody::getFood, survivorInventory);
+                case "water" ->
+                        saveItemOnInventoryRecord(totalPoints, field.getName(), requestBody::getWater, survivorInventory);
+                case "food" ->
+                        saveItemOnInventoryRecord(totalPoints, field.getName(), requestBody::getFood, survivorInventory);
                 case "medication" ->
-                        saveItemOnInventoryRecord(totalPoints,field.getName(), requestBody::getMedication, survivorInventory);
+                        saveItemOnInventoryRecord(totalPoints, field.getName(), requestBody::getMedication, survivorInventory);
                 case "ammunition" ->
-                        saveItemOnInventoryRecord(totalPoints,field.getName(), requestBody::getAmmunition, survivorInventory);
+                        saveItemOnInventoryRecord(totalPoints, field.getName(), requestBody::getAmmunition, survivorInventory);
             }
         }
         survivorInventory.setTotal(totalPoints[0]);
         survivorInventoryRepository.save(survivorInventory);
     }
 
-    private void saveItemOnInventoryRecord(Integer[] totalPoints,String name, Supplier<Integer> param, SurvivorInventory inventory) {
+    private void saveItemOnInventoryRecord(Integer[] totalPoints, String name, Supplier<Integer> param, SurvivorInventory inventory) {
         Item item = itemsService.findByName(name).get(0);
         int quantity = param.get();
         totalPoints[0] += (quantity * item.getPoints());
@@ -76,7 +77,21 @@ public class InventoriesService {
     }
 
 
-    public void deleteInventory(String id) {
+    public void deleteInventory(UUID id) {
+        if (id == null) throw new IllegalStateException("ID can't be null");
+        try {
+            var found = survivorInventoryRepository.findById(id);
+
+            if (found.isPresent()) {
+                SurvivorInventory inventory = found.get();
+                inventory.getInventory_item().forEach(item ->
+                        inventoryItemRecordRepository.deleteById(item.getId()));
+            }
+
+            survivorInventoryRepository.deleteById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

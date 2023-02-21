@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/v1/survivors")
 @AllArgsConstructor
@@ -54,11 +56,11 @@ public class SurvivorsController {
     }
 
     @DeleteMapping("/{user_id}")
-    ResponseEntity<ResponseAction> deleteExistingSurvivor(@PathVariable("user_id") String id) {
+    ResponseEntity<ResponseAction> deleteExistingSurvivor(@PathVariable("user_id") UUID id) {
+        inventoriesService.deleteInventory(id);
         locationsService.deleteSurvivorLocation(id);
         infectedRegisterService.deleteInfectedRegister(id);
-        inventoriesService.deleteInventory(id);
         survivorsService.deleteSurvivor(id);
-        return new ResponseEntity<>(new ResponseAction("User deleted",id), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseAction("User deleted",id.toString()), HttpStatus.OK);
     }
 }

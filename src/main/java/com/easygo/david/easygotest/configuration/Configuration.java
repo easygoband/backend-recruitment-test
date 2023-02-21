@@ -2,7 +2,6 @@ package com.easygo.david.easygotest.configuration;
 
 import com.easygo.david.easygotest.models.Item;
 import com.easygo.david.easygotest.repositories.ItemsRepository;
-import com.easygo.david.easygotest.services.ItemsService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
