@@ -23,14 +23,20 @@ public class InfectedRegisterController {
     private final InfectedRegisterService infectedRegisterService;
 
     @GetMapping
-    @Operation(summary = "Get all the register of Survivors", description = "This endpoint returns a complete list of all infection register.")
-    ResponseEntity<List<InfectedRegister>> getAllSurvivors() {
+    @Operation(summary = "Get all the Infected Register of Survivors", description = "This endpoint returns a complete list of all infection register.")
+    ResponseEntity<List<InfectedRegister>> getAllSurvivorsRegister() {
         return new ResponseEntity<>(infectedRegisterService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("custom/{isInfected}")
+    @Operation(summary = "Get all the Register of infected o non infected Survivors", description = "This endpoint returns a list of all selected infected/non-infected Survivor register.")
+    ResponseEntity<List<InfectedRegister>> getAllCustomSurvivorsRegister(@PathVariable("isInfected") Boolean infected) {
+        return new ResponseEntity<>(infectedRegisterService.findCustom(infected), HttpStatus.OK);
+    }
+
     @GetMapping("/{user_id}")
-    @Operation(summary = "Get the register of a Survivor by ID", description = "This endpoint returns a single register for a Survivor.")
-    ResponseEntity<InfectedRegister> getSurvivorById(@PathVariable("user_id") UUID id) {
+    @Operation(summary = "Get the Infected Register of a Survivor by ID", description = "This endpoint returns a single register for a Survivor.")
+    ResponseEntity<InfectedRegister> getSurvivorRegisterById(@PathVariable("user_id") UUID id) {
         return new ResponseEntity<>(infectedRegisterService.findBySurvivorId(id), HttpStatus.OK);
     }
 

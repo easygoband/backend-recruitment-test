@@ -24,10 +24,10 @@ public class InventoryController {
     @Autowired
     private final InventoriesService inventoriesService;
 
-    @GetMapping()    //TODO: update to get just the not infected inventories, but just on this controller
+    @GetMapping()
     @Operation(summary = "Get all the Survivor Inventories", description = "This endpoint returns a complete list of not infected Survivors.")
     ResponseEntity<List<SurvivorInventory>> getAllInventories() {
-        return new ResponseEntity<>(inventoriesService.getAllInventories(), HttpStatus.OK);
+        return new ResponseEntity<>(inventoriesService.getAllInventoriesCustom(false), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{user_id}")

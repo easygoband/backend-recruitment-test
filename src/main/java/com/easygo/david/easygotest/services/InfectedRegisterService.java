@@ -22,6 +22,11 @@ public class InfectedRegisterService {
         return infectedRegisterRepository.findAll();
     }
 
+    public List<InfectedRegister> findCustom(Boolean infected) {
+        var total = infectedRegisterRepository.findAll();
+        return total.stream().filter(register -> infected == register.getInfected()).toList();
+    }
+
     public InfectedRegister findBySurvivorId(UUID id) {
         if (id == null) throw new IllegalStateException("id can't be null");
         var svr = infectedRegisterRepository.findById(id);

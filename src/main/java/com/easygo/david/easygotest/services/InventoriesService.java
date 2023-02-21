@@ -30,8 +30,12 @@ public class InventoriesService {
     @Autowired
     private final InfectedRegisterService infectedRegisterService;
 
-    public List<SurvivorInventory> getAllInventories() {
+    public List<SurvivorInventory> getAllInventoriesCustom() {
         return survivorInventoryRepository.findAll();
+    }
+
+    public List<SurvivorInventory> getAllInventoriesCustom(Boolean infected) {
+        return survivorInventoryRepository.findByInfectedSurvivor(infected);
     }
 
     public SurvivorInventory getSingleInventory(UUID uuid) {
