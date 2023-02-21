@@ -3,6 +3,7 @@ package com.easygo.david.easygotest.controllers;
 import com.easygo.david.easygotest.controllers.request.NewSurvivorRequest;
 import com.easygo.david.easygotest.controllers.request.UpdateLocationRequest;
 import com.easygo.david.easygotest.controllers.request.UpdateSurvivorRequest;
+import com.easygo.david.easygotest.controllers.responses.ResponseAction;
 import com.easygo.david.easygotest.models.Location;
 import com.easygo.david.easygotest.models.Survivor;
 import com.easygo.david.easygotest.services.InventoriesService;
@@ -39,10 +40,11 @@ public class SurvivorsController {
     }
 
     @PostMapping
-    ResponseEntity<String> registerNewSurvivor(@RequestBody NewSurvivorRequest requestBody) {
+    @ResponseBody
+    ResponseEntity<ResponseAction> registerNewSurvivor(@RequestBody NewSurvivorRequest requestBody) {
         Survivor survivor = survivorsService.registrateSurvivor(requestBody);
         locationsService.registrateLocation(survivor.getId(), requestBody);
-        return new ResponseEntity<>("{\"created\":\"ok\",\"id\":\"" + survivor.getId() + "\"}", HttpStatus.CREATED);
+        return new ResponseEntity<>(new ResponseAction("created",survivor.getId().toString()), HttpStatus.CREATED);
     }
 
     @PutMapping("/{user_id}")
@@ -51,11 +53,11 @@ public class SurvivorsController {
     }
 
     @DeleteMapping("/{user_id}")
-    ResponseEntity<String> deleteExistingSurvivor(@PathVariable("user_id") String id) {
+    ResponseEntity<ResponseAction> deleteExistingSurvivor(@PathVariable("user_id") String id) {
         locationsService.deleteSurvivorLocation(id);
         survivorsService.deleteSurvivor(id);
         inventoriesService.deleteInventory(id);
-        return new ResponseEntity<>("User " + id + " deleted", HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseAction("User deleted",id), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{user_id}/last-location")
@@ -67,5 +69,4 @@ public class SurvivorsController {
     ResponseEntity<Location> updateLastLocation(@PathVariable("user_id") String id, @RequestBody UpdateLocationRequest request) {
         return new ResponseEntity<>(locationsService.updateSurvivorLastLocation(UUID.fromString(id),request), HttpStatus.OK);
     }
-
 }
