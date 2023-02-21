@@ -30,7 +30,7 @@ public class InventoriesService {
     @Autowired
     private final InfectedRegisterService infectedRegisterService;
 
-    public List<SurvivorInventory> getAllInventoriesCustom() {
+    public List<SurvivorInventory> getAllInventories() {
         return survivorInventoryRepository.findAll();
     }
 
