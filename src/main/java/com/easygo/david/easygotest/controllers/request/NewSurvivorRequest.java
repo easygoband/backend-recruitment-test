@@ -19,4 +19,13 @@ public class NewSurvivorRequest {
     private Double latitude;
     @NonNull
     private Double longitude;
+
+    @NonNull
+    private Integer water;
+    @NonNull
+    private Integer food;
+    @NonNull
+    private Integer medication;
+    @NonNull
+    private Integer ammunition;
 }

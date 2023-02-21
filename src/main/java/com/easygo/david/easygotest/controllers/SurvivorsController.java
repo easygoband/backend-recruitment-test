@@ -44,7 +44,7 @@ public class SurvivorsController {
         Survivor survivor = survivorsService.registrateSurvivor(requestBody);
         locationsService.registrateLocation(survivor, requestBody);
         infectedRegisterService.createInfectedRegister(survivor);
-        inventoriesService.createInventoryForUser(survivor);
+        inventoriesService.createInventoryForUser(survivor,requestBody);
         return new ResponseEntity<>(new ResponseAction("created",survivor.getId().toString()), HttpStatus.CREATED);
     }
 

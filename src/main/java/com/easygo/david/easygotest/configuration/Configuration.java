@@ -16,9 +16,9 @@ public class Configuration {
 
     @Bean
     public void CreateInitialItemsData(){
-        itemsRepository.save(new Item("Water",4));
-        itemsRepository.save(new Item("Food",3));
-        itemsRepository.save(new Item("Medication",2));
-        itemsRepository.save(new Item("Ammunition",1));
+        itemsRepository.save(new Item("water",4));
+        itemsRepository.save(new Item("food",3));
+        itemsRepository.save(new Item("medication",2));
+        itemsRepository.save(new Item("ammunition",1));
     }
 }

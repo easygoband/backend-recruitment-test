@@ -25,4 +25,8 @@ public class ItemsService {
         if (found.isPresent()) return found.get();
         else throw new IllegalStateException("Item with ID " + id + "not exits");
     }
+
+    public List<Item> findByName(String name) {
+        return itemsRepository.findByName(name);
+    }
 }

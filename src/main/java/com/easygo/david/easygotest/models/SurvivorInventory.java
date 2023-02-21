@@ -14,19 +14,19 @@ import java.util.UUID;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class SurvivorInventory {
     @Id
     @Column(name = "survivor_id", unique = true, updatable = false, nullable = false)
-    @NonNull
     UUID survivor_id;
 
     @OneToOne
     @JsonIgnore
     @JoinColumn(name = "id")
+    @NonNull
     private Survivor survivor;
 
-    @NonNull
-    private Integer total;
+    private Integer total = 0;
 
     @OneToMany(mappedBy="survivorInventory")
     @ToString.Exclude

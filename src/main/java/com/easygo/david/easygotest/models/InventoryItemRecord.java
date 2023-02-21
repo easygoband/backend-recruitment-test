@@ -12,11 +12,11 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class InventoryItemRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
-    @NonNull
+    @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
     @NonNull
