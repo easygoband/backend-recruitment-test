@@ -25,8 +25,8 @@ public class SurvivorsService {
         if (id == null) throw new IllegalStateException("ID can't be null");
         try {
             UUID uuid = UUID.fromString(id);
-            var svr = survivorsRepository.findById(uuid);
-            if (svr.isPresent()) return svr.get();
+            var found = survivorsRepository.findById(uuid);
+            if (found.isPresent()) return found.get();
             else throw new IllegalStateException("User with ID " + id + "not exits");
         } catch (Exception e) {
             throw new IllegalStateException("ID format error");

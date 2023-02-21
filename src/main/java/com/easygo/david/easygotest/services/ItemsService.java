@@ -21,8 +21,8 @@ public class ItemsService {
     public Item getItemById(Long id) {
         if (id == null) throw new IllegalStateException("ID can't be null");
 
-        var svr = itemsRepository.findById(id);
-        if (svr.isPresent()) return svr.get();
+        var found = itemsRepository.findById(id);
+        if (found.isPresent()) return found.get();
         else throw new IllegalStateException("Item with ID " + id + "not exits");
     }
 }

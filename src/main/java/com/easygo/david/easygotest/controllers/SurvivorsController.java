@@ -1,11 +1,10 @@
 package com.easygo.david.easygotest.controllers;
 
 import com.easygo.david.easygotest.controllers.request.NewSurvivorRequest;
-import com.easygo.david.easygotest.controllers.request.UpdateLocationRequest;
 import com.easygo.david.easygotest.controllers.request.UpdateSurvivorRequest;
 import com.easygo.david.easygotest.controllers.responses.ResponseAction;
-import com.easygo.david.easygotest.models.Location;
 import com.easygo.david.easygotest.models.Survivor;
+import com.easygo.david.easygotest.services.InfectedRegisterService;
 import com.easygo.david.easygotest.services.InventoriesService;
 import com.easygo.david.easygotest.services.LocationsService;
 import com.easygo.david.easygotest.services.SurvivorsService;
@@ -16,8 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
-
 @RestController
 @RequestMapping("/api/v1/survivors")
 @AllArgsConstructor
@@ -28,6 +25,8 @@ public class SurvivorsController {
     private final LocationsService locationsService;
     @Autowired
     private final InventoriesService inventoriesService;
+    @Autowired
+    private final InfectedRegisterService infectedRegisterService;
 
     @GetMapping
     ResponseEntity<List<Survivor>> getAllSurvivors() {
@@ -43,7 +42,9 @@ public class SurvivorsController {
     @ResponseBody
     ResponseEntity<ResponseAction> registerNewSurvivor(@RequestBody NewSurvivorRequest requestBody) {
         Survivor survivor = survivorsService.registrateSurvivor(requestBody);
-        locationsService.registrateLocation(survivor.getId(), requestBody);
+        locationsService.registrateLocation(survivor, requestBody);
+        infectedRegisterService.createInfectedRegister(survivor);
+        inventoriesService.createInventoryForUser(survivor);
         return new ResponseEntity<>(new ResponseAction("created",survivor.getId().toString()), HttpStatus.CREATED);
     }
 
@@ -55,18 +56,8 @@ public class SurvivorsController {
     @DeleteMapping("/{user_id}")
     ResponseEntity<ResponseAction> deleteExistingSurvivor(@PathVariable("user_id") String id) {
         locationsService.deleteSurvivorLocation(id);
-        survivorsService.deleteSurvivor(id);
         inventoriesService.deleteInventory(id);
+        survivorsService.deleteSurvivor(id);
         return new ResponseEntity<>(new ResponseAction("User deleted",id), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/{user_id}/last-location")
-    ResponseEntity<Location> getUserLastLocation(@PathVariable("user_id") String id) {
-        return new ResponseEntity<>(locationsService.getUserLocation(UUID.fromString(id)), HttpStatus.OK);
-    }
-
-    @PutMapping(value = "/{user_id}/last-location")
-    ResponseEntity<Location> updateLastLocation(@PathVariable("user_id") String id, @RequestBody UpdateLocationRequest request) {
-        return new ResponseEntity<>(locationsService.updateSurvivorLastLocation(UUID.fromString(id),request), HttpStatus.OK);
     }
 }

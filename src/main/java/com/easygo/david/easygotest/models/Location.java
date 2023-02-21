@@ -20,12 +20,12 @@ public class Location {
 
     @Id
     @Column(name = "survivor_id", unique = true, updatable = false, nullable = false)
-    @NonNull
     UUID survivor_id;
 
     @OneToOne
     @JsonIgnore
     @JoinColumn(name = "id")
+    @NonNull
     private Survivor survivor;
 
     @NonNull
