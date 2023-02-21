@@ -12,23 +12,22 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 @RequiredArgsConstructor
 public class InfectedRegister {
     @Id
     @Column(name = "survivor_id", nullable = false)
-    @NonNull
     private UUID survivor_id;
 
     @OneToOne
     @JsonIgnore
     @JoinColumn(name = "id")
+    @NonNull
     private Survivor survivor;
 
-    @NonNull
-    private Boolean infected;
+    private Boolean infected = false;
 
-    @NonNull
-    private Integer infected_alerts;
+    private Integer infected_alerts = 0;
 
     @Override
     public boolean equals(Object o) {
