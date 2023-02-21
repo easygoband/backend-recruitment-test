@@ -1,7 +1,9 @@
 package com.easygo.david.easygotest.controllers;
 
 import com.easygo.david.easygotest.controllers.request.NewSurvivorRequest;
+import com.easygo.david.easygotest.controllers.request.UpdateLocationRequest;
 import com.easygo.david.easygotest.controllers.request.UpdateSurvivorRequest;
+import com.easygo.david.easygotest.models.Location;
 import com.easygo.david.easygotest.models.Survivor;
 import com.easygo.david.easygotest.services.InventoriesService;
 import com.easygo.david.easygotest.services.LocationsService;
@@ -13,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/survivors")
@@ -53,6 +56,16 @@ public class SurvivorsController {
         survivorsService.deleteSurvivor(id);
         inventoriesService.deleteInventory(id);
         return new ResponseEntity<>("User " + id + " deleted", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{user_id}/last-location")
+    ResponseEntity<Location> getUserLastLocation(@PathVariable("user_id") String id) {
+        return new ResponseEntity<>(locationsService.getUserLocation(UUID.fromString(id)), HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/{user_id}/last-location")
+    ResponseEntity<Location> updateLastLocation(@PathVariable("user_id") String id, @RequestBody UpdateLocationRequest request) {
+        return new ResponseEntity<>(locationsService.updateSurvivorLastLocation(UUID.fromString(id),request), HttpStatus.OK);
     }
 
 }
