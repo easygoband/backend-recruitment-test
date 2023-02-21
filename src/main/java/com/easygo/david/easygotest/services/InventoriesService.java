@@ -26,6 +26,7 @@ public class InventoriesService {
     private final SurvivorInventoryRepository survivorInventoryRepository;
     @Autowired
     private final InventoryItemRecordRepository inventoryItemRecordRepository;
+    private final ItemsRepository itemsRepository;
 
 
     public List<SurvivorInventory> getAllInventories() {
@@ -49,22 +50,27 @@ public class InventoriesService {
         survivorInventory.setSurvivor_id(survivor.getId());
         survivorInventoryRepository.save(survivorInventory);
 
+        Integer[] totalPoints = {0};
+
         var fields = requestBody.getClass().getDeclaredFields();
         for (Field field : fields) {
             switch (field.getName()) {
-                case "water" -> saveItemOnInventoryRecord(field.getName(), requestBody::getWater, survivorInventory);
-                case "food" -> saveItemOnInventoryRecord(field.getName(), requestBody::getFood, survivorInventory);
+                case "water" -> saveItemOnInventoryRecord(totalPoints,field.getName(), requestBody::getWater, survivorInventory);
+                case "food" -> saveItemOnInventoryRecord(totalPoints,field.getName(), requestBody::getFood, survivorInventory);
                 case "medication" ->
-                        saveItemOnInventoryRecord(field.getName(), requestBody::getMedication, survivorInventory);
+                        saveItemOnInventoryRecord(totalPoints,field.getName(), requestBody::getMedication, survivorInventory);
                 case "ammunition" ->
-                        saveItemOnInventoryRecord(field.getName(), requestBody::getAmmunition, survivorInventory);
+                        saveItemOnInventoryRecord(totalPoints,field.getName(), requestBody::getAmmunition, survivorInventory);
             }
         }
+        survivorInventory.setTotal(totalPoints[0]);
+        survivorInventoryRepository.save(survivorInventory);
     }
 
-    private void saveItemOnInventoryRecord(String name, Supplier<Integer> param, SurvivorInventory inventory) {
+    private void saveItemOnInventoryRecord(Integer[] totalPoints,String name, Supplier<Integer> param, SurvivorInventory inventory) {
         Item item = itemsService.findByName(name).get(0);
         int quantity = param.get();
+        totalPoints[0] += (quantity * item.getPoints());
         InventoryItemRecord record = new InventoryItemRecord(quantity, item, inventory);
         inventoryItemRecordRepository.save(record);
     }
