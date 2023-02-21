@@ -28,7 +28,7 @@ public class TradeService {
 
         var register = infectedRegisterService.findBySurvivorId(own_id);
         if (register.getInfected())
-            throw new RuntimeException("Used if already infectedTrade not available.");
+            throw new RuntimeException("Used if already infected, Trade not available.");
 
         Set<InventoryItemRecord> currentSet = currentSurvivor.getInventory_item();
         Set<InventoryItemRecord> targetSet = targetSurvivor.getInventory_item();

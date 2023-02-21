@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/items")
+@RequestMapping("/api/v1/survivors/items")
 @AllArgsConstructor
 public class ItemsController {
     @Autowired

@@ -27,6 +27,8 @@ public class InventoriesService {
     private final SurvivorInventoryRepository survivorInventoryRepository;
     @Autowired
     private final InventoryItemRecordRepository inventoryItemRecordRepository;
+    @Autowired
+    private final InfectedRegisterService infectedRegisterService;
 
     public List<SurvivorInventory> getAllInventories() {
         return survivorInventoryRepository.findAll();
@@ -34,6 +36,10 @@ public class InventoriesService {
 
     public SurvivorInventory getSingleInventory(UUID uuid) {
         if (uuid == null) throw new IllegalStateException("id can't be null");
+
+        var register = infectedRegisterService.findBySurvivorId(uuid);
+        if (register.getInfected())
+            throw new RuntimeException("Used if already infected, Inventory not available.");
 
         var found = survivorInventoryRepository.findById(uuid);
 
