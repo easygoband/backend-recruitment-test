@@ -1,10 +1,7 @@
 package com.easygo.david.easygotest.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -16,10 +13,20 @@ import java.util.Set;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class Item {
     @Id
     @Column(name = "item_id", nullable = false)
-    @NonNull
+    @SequenceGenerator(
+            initialValue = 100,
+            name = "item_id_sequence",
+            sequenceName = "item_id_sequence"
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "item_id_sequence"
+    )
     private Long item_id;
 
     @NonNull

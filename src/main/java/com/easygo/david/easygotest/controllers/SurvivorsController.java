@@ -31,7 +31,7 @@ public class SurvivorsController {
 
     @GetMapping
     ResponseEntity<List<Survivor>> getAllSurvivors() {
-        return null;
+        return new ResponseEntity<>(survivorsService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{user_id}")
