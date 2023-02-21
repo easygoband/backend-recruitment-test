@@ -3,7 +3,6 @@ package com.easygo.david.easygotest.services;
 import com.easygo.david.easygotest.controllers.request.NewSurvivorRequest;
 import com.easygo.david.easygotest.controllers.request.UpdateLocationRequest;
 import com.easygo.david.easygotest.models.Location;
-import com.easygo.david.easygotest.models.Survivor;
 import com.easygo.david.easygotest.repositories.LocationsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -18,6 +18,10 @@ import java.util.UUID;
 public class LocationsService {
     @Autowired
     private final LocationsRepository locationsRepository;
+
+    public List<Location> getAllLocations() {
+        return locationsRepository.findAll();
+    }
 
     public Location registrateLocation(UUID uuid, NewSurvivorRequest request) {
         if (uuid == null || request == null) throw new IllegalStateException("Location can't be null");
