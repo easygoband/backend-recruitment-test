@@ -11,8 +11,8 @@
 	<groupId>com.easygo.david</groupId>
 	<artifactId>easygo-test</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>easygo-test</name>
-	<description>esayGo recruitment test</description>
+	<name>easyGo-test</name>
+	<description>easyGo recruitment test</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
