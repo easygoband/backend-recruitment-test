@@ -1,5 +1,7 @@
 package com.easygo.david.easygotest.services;
 
+import com.easygo.david.easygotest.exceptions.ApiRequestException;
+import com.easygo.david.easygotest.exceptions.NotFoundException;
 import com.easygo.david.easygotest.models.InfectedRegister;
 import com.easygo.david.easygotest.models.Survivor;
 import com.easygo.david.easygotest.repositories.InfectedRegisterRepository;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
@@ -28,16 +31,21 @@ public class InfectedRegisterService {
     }
 
     public InfectedRegister findBySurvivorId(UUID id) {
-        if (id == null) throw new IllegalStateException("id can't be null");
-        var svr = infectedRegisterRepository.findById(id);
-        if (svr.isPresent()) return svr.get();
-        else throw new IllegalStateException("User with ID " + id + "not exits");
+        try {
+            var svr = infectedRegisterRepository.findById(id);
+            return svr.get();
+        } catch (NoSuchElementException e) {
+            throw new NotFoundException("User with ID " + id + "not exits");
+        } catch (Exception e) {
+            throw new ApiRequestException("ID request error. ");
+        }
+
     }
 
     public InfectedRegister updaterUserInfectedAlerts(UUID id) {
-        if (id == null) throw new IllegalStateException("id can't be null");
-        var found = infectedRegisterRepository.findById(id);
-        if (found.isPresent()) {
+        try {
+            var found = infectedRegisterRepository.findById(id);
+
             InfectedRegister register = found.get();
             register.setInfected_alerts(register.getInfected_alerts() + 1);
 
@@ -46,23 +54,29 @@ public class InfectedRegisterService {
             infectedRegisterRepository.save(register);
 
             return register;
-        } else throw new IllegalStateException("User with ID " + id + "not exits");
+        } catch (NoSuchElementException e) {
+            throw new NotFoundException("User Location with ID " + id + "not exits");
+        } catch (Exception e) {
+            throw new ApiRequestException("ID format error");
+        }
     }
 
     public InfectedRegister createInfectedRegister(Survivor survivor) {
-        if (survivor == null) throw new IllegalStateException("Survivor can't be null");
-        InfectedRegister register = new InfectedRegister(survivor);
-        register.setSurvivor_id(survivor.getId());
-        return infectedRegisterRepository.save(register);
+        try {
+            if (survivor == null) throw new IllegalStateException("Survivor can't be null");
+            InfectedRegister register = new InfectedRegister(survivor);
+            register.setSurvivor_id(survivor.getId());
+            return infectedRegisterRepository.save(register);
+        } catch (Exception e){
+            throw new ApiRequestException("Apir request error");
+        }
     }
 
     public void deleteInfectedRegister(UUID id) {
-        if (id == null) throw new IllegalStateException("ID can't be null");
         try {
-//            UUID uuid = UUID.fromString(id);
             infectedRegisterRepository.deleteById(id);
         } catch (Exception e) {
-            throw new IllegalStateException("ID format error");
+            throw new ApiRequestException("ID format error");
         }
     }
 }
