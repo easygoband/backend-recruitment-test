@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
@@ -39,13 +40,13 @@ public class SurvivorsService {
     public Survivor updateSurvivorData(UUID id, UpdateSurvivorRequest request) {
         try {
             var svr = survivorsRepository.findById(id);
-            if (svr.isPresent()) {
-                Survivor toUpdate = svr.get();
-                if (request.getFirst_name() != null) toUpdate.setFirst_name(request.getFirst_name());
-                if (request.getSecond_name() != null) toUpdate.setSecond_name(request.getSecond_name());
-                if (request.getAge() != null) toUpdate.setAge(request.getAge());
-                return survivorsRepository.save(toUpdate);
-            } else throw new NotFoundException("User with ID " + id + "not exits");
+            var toUpdate = svr.get();
+            if (request.getFirst_name() != null) toUpdate.setFirst_name(request.getFirst_name());
+            if (request.getSecond_name() != null) toUpdate.setSecond_name(request.getSecond_name());
+            if (request.getAge() != null) toUpdate.setAge(request.getAge());
+            return survivorsRepository.save(toUpdate);
+        } catch (NoSuchElementException e) {
+            throw new NotFoundException("User with ID " + id + "not exits");
         } catch (Exception e) {
             throw new ApiRequestException("ID format error");
         }

@@ -4,9 +4,7 @@ import com.easygo.david.easygotest.controllers.request.NewSurvivorRequest;
 import com.easygo.david.easygotest.controllers.request.UpdateSurvivorRequest;
 import com.easygo.david.easygotest.exceptions.ApiRequestException;
 import com.easygo.david.easygotest.exceptions.NotFoundException;
-import com.easygo.david.easygotest.models.Item;
 import com.easygo.david.easygotest.models.Survivor;
-import com.easygo.david.easygotest.repositories.ItemsRepository;
 import com.easygo.david.easygotest.repositories.SurvivorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +16,8 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -71,13 +70,13 @@ class SurvivorsServiceTest {
     @Test
     void updateSurvivorDataWrongIdFormat() {
         when(survivorRepository.findById(any(UUID.class))).thenThrow(ApiRequestException.class);
-        assertThrows(ApiRequestException.class, () -> survivorsService.findSurvivorById(UUID.randomUUID()));
+        assertThrows(ApiRequestException.class, () -> survivorsService.updateSurvivorData(UUID.randomUUID(),new UpdateSurvivorRequest()));
     }
 
     @Test
     void updateSurvivorDataNotFoundException() {
-        when(survivorRepository.findById(any(UUID.class))).thenThrow(NotFoundException.class);
-        assertThrows(NotFoundException.class, () -> survivorsService.findSurvivorById(UUID.randomUUID()));
+        when(survivorRepository.save(any(Survivor.class))).thenThrow(NotFoundException.class);
+        assertThrows(NotFoundException.class, () -> survivorsService.updateSurvivorData(UUID.randomUUID(), new UpdateSurvivorRequest()));
     }
 
     @Test
