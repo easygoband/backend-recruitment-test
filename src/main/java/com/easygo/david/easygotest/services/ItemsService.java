@@ -1,5 +1,6 @@
 package com.easygo.david.easygotest.services;
 
+import com.easygo.david.easygotest.exceptions.NotFoundException;
 import com.easygo.david.easygotest.models.Item;
 import com.easygo.david.easygotest.repositories.ItemsRepository;
 import lombok.AllArgsConstructor;
@@ -19,14 +20,14 @@ public class ItemsService {
     }
 
     public Item getItemById(Long id) {
-        if (id == null) throw new IllegalStateException("ID can't be null");
-
         var found = itemsRepository.findById(id);
-        if (found.isPresent()) return found.get();
-        else throw new IllegalStateException("Item with ID " + id + "not exits");
+        return found.orElseThrow(() ->
+                new NotFoundException("Item with id: " + id + "NOT found!"));
     }
 
     public List<Item> findByName(String name) {
-        return itemsRepository.findByName(name);
+        var res = itemsRepository.findByName(name);
+        if (res.isEmpty()) throw new NotFoundException("Item with nane: " + name + "NOT found!");
+        return res;
     }
 }
