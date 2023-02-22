@@ -54,7 +54,7 @@ public class LocationsService {
             toUpdate.setLast_modified(Date.from(Instant.now()));
             return locationsRepository.save(toUpdate);
         } catch (NoSuchElementException e) {
-            throw new NotFoundException("User with ID " + id + "not exits");
+            throw new NotFoundException("User Location with ID " + id + "not exits");
         } catch (Exception e) {
             throw new ApiRequestException("ID format error");
         }

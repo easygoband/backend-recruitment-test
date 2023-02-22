@@ -2,7 +2,6 @@ package com.easygo.david.easygotest.services;
 
 import com.easygo.david.easygotest.controllers.request.NewSurvivorRequest;
 import com.easygo.david.easygotest.controllers.request.UpdateLocationRequest;
-import com.easygo.david.easygotest.controllers.request.UpdateSurvivorRequest;
 import com.easygo.david.easygotest.exceptions.ApiRequestException;
 import com.easygo.david.easygotest.exceptions.NotFoundException;
 import com.easygo.david.easygotest.models.Location;
