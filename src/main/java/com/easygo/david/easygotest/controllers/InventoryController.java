@@ -32,7 +32,10 @@ public class InventoryController {
 
     @GetMapping(value = "/{user_id}")
     @Operation(summary = "Get an Inventory from Survivor ID", description = "This endpoint returns the Inventory from a non Infected Survivor.")
-    ResponseEntity<SurvivorInventory> getSingleSurvivorInventory(@PathVariable("user_id") String id) {
-        return new ResponseEntity<>(inventoriesService.getSingleInventory(UUID.fromString(id)), HttpStatus.OK);
+    ResponseEntity<SurvivorInventory> getSingleSurvivorInventory(@PathVariable("user_id") UUID id) {
+        if (!inventoriesService.validateInfectedUser(id))
+            return new ResponseEntity<>(inventoriesService.getSingleInventory(id), HttpStatus.OK);
+        else
+            throw new RuntimeException("");
     }
 }

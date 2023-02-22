@@ -38,12 +38,13 @@ public class InventoriesService {
         return survivorInventoryRepository.findByInfectedSurvivor(infected);
     }
 
+    public Boolean validateInfectedUser(UUID uuid){
+        var register = infectedRegisterService.findBySurvivorId(uuid);
+        return register.getInfected();
+    }
+
     public SurvivorInventory getSingleInventory(UUID uuid) {
         if (uuid == null) throw new IllegalStateException("id can't be null");
-
-        var register = infectedRegisterService.findBySurvivorId(uuid);
-        if (register.getInfected())
-            throw new RuntimeException("Used if already infected, Inventory not available.");
 
         var found = survivorInventoryRepository.findById(uuid);
 
