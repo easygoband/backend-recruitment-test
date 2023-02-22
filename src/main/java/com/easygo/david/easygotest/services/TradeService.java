@@ -1,6 +1,7 @@
 package com.easygo.david.easygotest.services;
 
 import com.easygo.david.easygotest.controllers.request.TradeRequest;
+import com.easygo.david.easygotest.exceptions.ApiRequestException;
 import com.easygo.david.easygotest.models.InventoryItemRecord;
 import com.easygo.david.easygotest.models.SurvivorInventory;
 import com.easygo.david.easygotest.util.TotalPointsUpdater;
@@ -29,7 +30,7 @@ public class TradeService {
 
         var register = infectedRegisterService.findBySurvivorId(own_id);
         if (register.getInfected())
-            throw new RuntimeException("Used if already infected, Trade not available.");
+            throw new ApiRequestException("Used if already infected, Trade not available.");
 
         Set<InventoryItemRecord> currentSet = currentSurvivor.getInventory_item();
         Set<InventoryItemRecord> targetSet = targetSurvivor.getInventory_item();
@@ -38,7 +39,7 @@ public class TradeService {
         int pointsFromTarget = tradeHandler.getPointsToTrade(targetSet, tradeRequest.getGetItems());
 
         if (pointsFromCurrent != pointsFromTarget)
-            throw new RuntimeException("Exchange points must be equal!");
+            throw new ApiRequestException("Exchange points must be equal!");
 
         tradeHandler.addItemsToSet(currentSet, tradeRequest.getGetItems());
         tradeHandler.addItemsToSet(targetSet, tradeRequest.getSendItems());
