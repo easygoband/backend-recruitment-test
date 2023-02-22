@@ -41,7 +41,7 @@ public class SurvivorsController {
 
     @GetMapping("/{user_id}")
     @Operation(summary = "Get registered Survivor by ID", description = "This endpoint returns a Survivor by giving his UUID identifier.")
-    ResponseEntity<Survivor> getSurvivorById(@PathVariable("user_id") String id) {
+    ResponseEntity<Survivor> getSurvivorById(@PathVariable("user_id") UUID id) {
         return new ResponseEntity<>(survivorsService.findSurvivorById(id), HttpStatus.OK);
     }
 
@@ -57,7 +57,7 @@ public class SurvivorsController {
 
     @PutMapping("/{user_id}")
     @Operation(summary = "Update an existing Survivor", description = "This endpoint returns an updated Survivor by receiving some field updates.")
-    ResponseEntity<Survivor> updateExistingUser(@PathVariable("user_id") String id, @RequestBody UpdateSurvivorRequest request) {
+    ResponseEntity<Survivor> updateExistingUser(@PathVariable("user_id") UUID id, @RequestBody UpdateSurvivorRequest request) {
         return new ResponseEntity<>(survivorsService.updateSurvivorData(id, request), HttpStatus.CREATED);
     }
 

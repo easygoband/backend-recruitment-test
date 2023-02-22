@@ -2,6 +2,8 @@ package com.easygo.david.easygotest.services;
 
 import com.easygo.david.easygotest.controllers.request.NewSurvivorRequest;
 import com.easygo.david.easygotest.controllers.request.UpdateSurvivorRequest;
+import com.easygo.david.easygotest.exceptions.ApiRequestException;
+import com.easygo.david.easygotest.exceptions.NotFoundException;
 import com.easygo.david.easygotest.models.Survivor;
 import com.easygo.david.easygotest.repositories.SurvivorRepository;
 import lombok.AllArgsConstructor;
@@ -21,16 +23,10 @@ public class SurvivorsService {
         return survivorsRepository.findAll();
     }
 
-    public Survivor findSurvivorById(String id) {
-        if (id == null) throw new IllegalStateException("ID can't be null");
-        try {
-            UUID uuid = UUID.fromString(id);
-            var found = survivorsRepository.findById(uuid);
-            if (found.isPresent()) return found.get();
-            else throw new IllegalStateException("User with ID " + id + "not exits");
-        } catch (Exception e) {
-            throw new IllegalStateException("ID format error");
-        }
+    public Survivor findSurvivorById(UUID id) {
+        var found = survivorsRepository.findById(id);
+        if (found.isPresent()) return found.get();
+        else throw new NotFoundException("User with ID " + id + "not exits");
     }
 
     public Survivor registrateSurvivor(NewSurvivorRequest request) {
@@ -40,29 +36,26 @@ public class SurvivorsService {
         return survivorsRepository.save(survivor);
     }
 
-    public Survivor updateSurvivorData(String id, UpdateSurvivorRequest request) {
-        if (id == null) throw new IllegalStateException("ID can't be null");
+    public Survivor updateSurvivorData(UUID id, UpdateSurvivorRequest request) {
         try {
-            UUID uuid = UUID.fromString(id);
-            var svr = survivorsRepository.findById(uuid);
+            var svr = survivorsRepository.findById(id);
             if (svr.isPresent()) {
                 Survivor toUpdate = svr.get();
                 if (request.getFirst_name() != null) toUpdate.setFirst_name(request.getFirst_name());
                 if (request.getSecond_name() != null) toUpdate.setSecond_name(request.getSecond_name());
                 if (request.getAge() != null) toUpdate.setAge(request.getAge());
                 return survivorsRepository.save(toUpdate);
-            } else throw new IllegalStateException("User with ID " + id + "not exits");
+            } else throw new NotFoundException("User with ID " + id + "not exits");
         } catch (Exception e) {
-            throw new IllegalStateException("ID format error");
+            throw new ApiRequestException("ID format error");
         }
     }
 
     public void deleteSurvivor(UUID id) {
-        if (id == null) throw new IllegalStateException("ID can't be null");
         try {
             survivorsRepository.deleteById(id);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new ApiRequestException("ID format error");
         }
     }
 }

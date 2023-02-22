@@ -2,9 +2,11 @@ package com.easygo.david.easygotest.controllers.request;
 
 import com.easygo.david.easygotest.models.Gender;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Data
+@NoArgsConstructor
 public class NewSurvivorRequest {
     @NonNull
     private String first_name;
