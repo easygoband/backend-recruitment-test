@@ -33,8 +33,7 @@ public class TradeService {
 
         Set<InventoryItemRecord> currentSet = currentSurvivor.getInventory_item();
         Set<InventoryItemRecord> targetSet = targetSurvivor.getInventory_item();
-
-        TradeHandler tradeHandler = new TradeHandler();
+        
         int pointsFromCurrent = tradeHandler.getPointsToTrade(currentSet, tradeRequest.getSendItems());
         int pointsFromTarget = tradeHandler.getPointsToTrade(targetSet, tradeRequest.getGetItems());
 
@@ -46,7 +45,7 @@ public class TradeService {
 
 
         currentSurvivor.setInventory_item(currentSet);
-        TotalPointsUpdater updater = new TotalPointsUpdater();
+
         currentSurvivor.setTotal(updater.updateTotalPointAmount(currentSet));
         targetSurvivor.setInventory_item(targetSet);
         targetSurvivor.setTotal(updater.updateTotalPointAmount(targetSet));
@@ -56,6 +55,9 @@ public class TradeService {
 
         return List.of(ic, it);
     }
+
+    TotalPointsUpdater updater;
+    TradeHandler tradeHandler;
 }
 
 
