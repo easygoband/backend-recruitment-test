@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:zssn
+    driverClassName: org.h2.Driver
+  sql:
+    init:
+      data-locations: classpath:db/data-h2.sql
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: 'true'
+    hibernate:
+      ddl-auto: create-drop
