@@ -1,4 +1,4 @@
-INSERT INTO ITEM(NAME, POINTS) VALUES ("Water", 4);
-INSERT INTO ITEM(NAME, POINTS) VALUES ("Food", 3);
-INSERT INTO ITEM(NAME, POINTS) VALUES ("Medication", 2);
-INSERT INTO ITEM(NAME, POINTS) VALUES ("Ammunition", 1);
+INSERT INTO item(id, name, points) VALUES (1, 'Water', 4);
+INSERT INTO item(id, name, points) VALUES (2, 'Food', 3);
+INSERT INTO item(id, name, points) VALUES (3, 'Medication', 2);
+INSERT INTO item(id, name, points) VALUES (4, 'Ammunition', 1);
