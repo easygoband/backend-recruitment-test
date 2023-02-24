@@ -15,7 +15,7 @@ class ArithmeticUtil {
 
     fun average(
       sum: Double,
-      count: Int,
+      count: Double,
       format: String = ApiConstants.TWO_DECIMAL_FORMAT
     ): String {
       val average = sum / count
