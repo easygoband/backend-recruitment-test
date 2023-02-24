@@ -29,6 +29,16 @@ class SurvivorServiceImpl(
     }
   }
 
+  @Transactional(readOnly = true)
+  override fun countAllUninfected(): Int {
+    return survivorRepository.countByIsInfectedFalse()
+  }
+
+  @Transactional(readOnly = true)
+  override fun countAllInfected(): Int {
+    return survivorRepository.countByIsInfectedTrue()
+  }
+
   @Transactional(propagation = Propagation.REQUIRED)
   override fun saveSurvivor(survivorRequest: SurvivorRequest): SurvivorDto {
     val lastLocation: Location = locationService.saveLocation(survivorRequest.lastLocation)
