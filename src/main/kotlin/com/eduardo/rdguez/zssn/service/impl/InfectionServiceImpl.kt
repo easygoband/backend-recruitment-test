@@ -17,7 +17,7 @@ class InfectionServiceImpl(
 ) : InfectionService {
 
   @Transactional(propagation = Propagation.REQUIRED)
-  override fun reportInfection(infectionLogRequest: InfectionLogRequest) {
+  override fun reportSurvivorInfection(infectionLogRequest: InfectionLogRequest) {
     val speaker = survivorService.findById(infectionLogRequest.speakerId)
     val infected = survivorService.findById(infectionLogRequest.infectedId)
     infectionLogService.saveInfectionLog(speaker, infected)

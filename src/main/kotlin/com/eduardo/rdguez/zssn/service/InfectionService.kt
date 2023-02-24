@@ -4,6 +4,6 @@ import com.eduardo.rdguez.zssn.model.request.InfectionLogRequest
 
 interface InfectionService {
 
-  fun reportInfection(infectionLogRequest: InfectionLogRequest)
+  fun reportSurvivorInfection(infectionLogRequest: InfectionLogRequest)
 
 }
