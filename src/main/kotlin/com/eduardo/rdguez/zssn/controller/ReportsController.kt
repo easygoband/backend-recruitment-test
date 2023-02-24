@@ -30,4 +30,9 @@ class ReportsController(
     return reportService.findLostPoints()
   }
 
+  @GetMapping("/items-average")
+  fun findItemsAverage(): List<ItemAverage> {
+    return reportService.findAverageItemsBySurvivor()
+  }
+
 }

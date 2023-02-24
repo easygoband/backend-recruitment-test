@@ -4,10 +4,11 @@ import com.eduardo.rdguez.zssn.domain.Survivor
 import com.eduardo.rdguez.zssn.domain.SurvivorInventory
 import com.eduardo.rdguez.zssn.mapper.SurvivorMapper
 import com.eduardo.rdguez.zssn.model.response.InfectionsResponse
+import com.eduardo.rdguez.zssn.model.response.ItemAverage
 import com.eduardo.rdguez.zssn.model.response.LostPointsResponse
 import com.eduardo.rdguez.zssn.model.response.NoInfectionsResponse
-import com.eduardo.rdguez.zssn.service.SurvivorInventoryService
 import com.eduardo.rdguez.zssn.service.ReportService
+import com.eduardo.rdguez.zssn.service.SurvivorInventoryService
 import com.eduardo.rdguez.zssn.service.SurvivorService
 import com.eduardo.rdguez.zssn.util.ArithmeticUtil
 import org.springframework.stereotype.Service
@@ -58,6 +59,21 @@ class ReportServiceImpl(
 
   fun sumInventoryPoints(survivorInventory: List<SurvivorInventory>): Int {
     return survivorInventory.sumOf { it.quantity * it.item.points }
+  }
+
+  override fun findAverageItemsBySurvivor(): List<ItemAverage> {
+    val uninfected: Int = survivorService.countAllUninfectedSurvivors()
+    val survivorInventory: List<SurvivorInventory> = survivorInventoryService.findAllInventory()
+
+    return survivorInventory.groupBy { it.item }
+      .map { group ->
+        val totalQuantity: Int = group.value.sumOf { it.quantity }
+        val average: String = ArithmeticUtil.average(totalQuantity.toDouble(), uninfected)
+        ItemAverage(
+          name = group.key.name,
+          average = average
+        )
+      }
   }
 
 }
