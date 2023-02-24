@@ -33,7 +33,7 @@ class InfectionsController(
     errors: Errors
   ) {
     if (errors.hasErrors()) {
-      throw BadRequestException(errors)
+      throw BadRequestException("$errors")
     }
     infectionService.reportSurvivorInfection(infectionLogRequest)
   }

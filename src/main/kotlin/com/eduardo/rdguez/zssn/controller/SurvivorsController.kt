@@ -41,7 +41,7 @@ class SurvivorsController(
     val survivor = survivorService.saveSurvivor(survivorRequest)
 
     if (errors.hasErrors()) {
-      throw BadRequestException(errors)
+      throw BadRequestException("$errors")
     }
     return ResponseEntity.status(HttpStatus.CREATED).body(survivor)
   }
@@ -63,7 +63,7 @@ class SurvivorsController(
     val survivor = survivorService.updateSurvivorLocation(id, locationRequest)
 
     if (errors.hasErrors()) {
-      throw BadRequestException(errors)
+      throw BadRequestException("$errors")
     }
     return ResponseEntity.status(HttpStatus.OK).body(survivor)
   }
