@@ -9,5 +9,6 @@ interface ReportService {
 
   fun findInfections(): InfectionsResponse
   fun findNoInfections(): NoInfectionsResponse
+  fun findLostPoints(): List<LostPointsResponse>
 
 }

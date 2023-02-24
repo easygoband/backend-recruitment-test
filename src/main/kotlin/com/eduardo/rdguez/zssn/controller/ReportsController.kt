@@ -1,6 +1,8 @@
 package com.eduardo.rdguez.zssn.controller
 
 import com.eduardo.rdguez.zssn.model.response.InfectionsResponse
+import com.eduardo.rdguez.zssn.model.response.ItemAverage
+import com.eduardo.rdguez.zssn.model.response.LostPointsResponse
 import com.eduardo.rdguez.zssn.model.response.NoInfectionsResponse
 import com.eduardo.rdguez.zssn.service.ReportService
 import org.springframework.web.bind.annotation.GetMapping
@@ -21,6 +23,11 @@ class ReportsController(
   @GetMapping("/no-infections")
   fun findNotInfections(): NoInfectionsResponse {
     return reportService.findNoInfections()
+  }
+
+  @GetMapping("/lost-points")
+  fun findLostPoints(): List<LostPointsResponse> {
+    return reportService.findLostPoints()
   }
 
 }
