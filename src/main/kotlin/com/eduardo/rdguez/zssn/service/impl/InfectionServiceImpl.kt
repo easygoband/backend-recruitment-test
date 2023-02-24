@@ -33,7 +33,7 @@ class InfectionServiceImpl(
 
   @Transactional(readOnly = true)
   fun survivorIsInfected(survivor: Survivor): Boolean {
-    logger.info { "Check if the survivor with ID: ${survivor.id} is infected"}
+    logger.info { "Check if the survivor with ID: ${survivor.id} is infected" }
 
     val reports: Long = infectionLogService.countLogsBySurvivor(survivor)
     return reports >= ApiConstants.REPORTING_LIMIT
