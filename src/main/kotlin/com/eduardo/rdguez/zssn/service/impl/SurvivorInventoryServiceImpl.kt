@@ -10,6 +10,7 @@ import com.eduardo.rdguez.zssn.service.SurvivorInventoryService
 import com.eduardo.rdguez.zssn.service.ItemService
 import java.util.*
 import kotlin.reflect.full.memberProperties
+import mu.KotlinLogging
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
@@ -19,25 +20,33 @@ class SurvivorInventoryServiceImpl(
   private val survivorInventoryRepository: SurvivorInventoryRepository,
   private val itemService: ItemService
 ) : SurvivorInventoryService {
+  private val logger = KotlinLogging.logger {}
 
   @Transactional(readOnly = true)
   override fun findAllSurvivorInventory(): List<SurvivorInventory> {
+    logger.info { "Find all survivor inventory" }
+
     return survivorInventoryRepository.findAll()
   }
 
   override fun findInventoryBySurvivor(survivor: Survivor): List<SurvivorInventory> {
+    logger.info { "Find inventory by survivor with ID: ${survivor.id}" }
+
     return survivorInventoryRepository.findAllBySurvivor(survivor)
   }
 
   @Transactional(propagation = Propagation.NESTED)
   override fun saveInventory(survivorInventory: SurvivorInventory): SurvivorInventory {
+    logger.info { "Save survivor inventory with ID: ${survivorInventory.survivor.id}" }
+
     return survivorInventoryRepository.save(survivorInventory)
   }
 
   @Transactional(propagation = Propagation.REQUIRED)
   override fun assignInventory(survivor: Survivor, itemsRequest: ItemsRequest): List<SurvivorInventory> {
-    val survivorInventoryList = mutableListOf<SurvivorInventory>()
+    logger.info { "Assign survivor inventory: $itemsRequest with ID: ${survivor.id}" }
 
+    val survivorInventoryList = mutableListOf<SurvivorInventory>()
     for (prop in ItemsRequest::class.memberProperties) {
       val item: Optional<Item> = itemService.findItemByName(prop.name)
       val quality = prop.get(itemsRequest) as Int
