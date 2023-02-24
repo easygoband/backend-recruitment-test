@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository
 @Repository
 interface SurvivorRepository : JpaRepository<Survivor, Long> {
 
+  fun findAllByIsInfectedTrue(): List<Survivor>
   fun findByIdAndIsInfectedFalse(id: Long): Optional<Survivor>
   fun countByIsInfectedFalse(): Int
   fun countByIsInfectedTrue(): Int

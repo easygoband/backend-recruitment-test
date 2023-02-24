@@ -23,6 +23,11 @@ class SurvivorServiceImpl(
 ) : SurvivorService {
 
   @Transactional(readOnly = true)
+  override fun findAllInfectedSurvivors(): List<Survivor> {
+    return survivorRepository.findAllByIsInfectedTrue()
+  }
+
+  @Transactional(readOnly = true)
   override fun findSurvivorById(id: Long): Survivor {
     return survivorRepository.findByIdAndIsInfectedFalse(id).orElseThrow {
       throw EntityNotFoundException("Survivor with ID: $id not found or is infected")
