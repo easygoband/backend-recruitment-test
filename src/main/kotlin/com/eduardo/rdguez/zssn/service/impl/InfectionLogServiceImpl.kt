@@ -20,4 +20,9 @@ class InfectionLogServiceImpl(
     infectionLogRepository.save(infectionLog)
   }
 
+  @Transactional(readOnly = true)
+  override fun countLogsBySurvivor(survivor: Survivor): Long {
+    return infectionLogRepository.countByInfected(survivor)
+  }
+
 }

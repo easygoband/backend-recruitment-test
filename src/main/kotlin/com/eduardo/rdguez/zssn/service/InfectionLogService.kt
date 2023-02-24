@@ -5,5 +5,6 @@ import com.eduardo.rdguez.zssn.domain.Survivor
 interface InfectionLogService {
 
   fun saveInfectionLog(speaker: Survivor, infected: Survivor)
+  fun countLogsBySurvivor(survivor: Survivor): Long
 
 }
