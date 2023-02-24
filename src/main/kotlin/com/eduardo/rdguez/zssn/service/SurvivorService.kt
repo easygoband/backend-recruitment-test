@@ -14,5 +14,6 @@ interface SurvivorService {
   fun updateSurvivorToInfected(id: Long): SurvivorDto
   fun countAllInfectedSurvivors(): Int
   fun countAllUninfectedSurvivors(): Int
+  fun countAllSurvivors(): Long
 
 }

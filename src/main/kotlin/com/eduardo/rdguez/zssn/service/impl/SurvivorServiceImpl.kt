@@ -34,6 +34,10 @@ class SurvivorServiceImpl(
     }
   }
 
+  override fun countAllSurvivors(): Long {
+    return survivorRepository.count()
+  }
+
   @Transactional(readOnly = true)
   override fun countAllUninfectedSurvivors(): Int {
     return survivorRepository.countByIsInfectedFalse()
