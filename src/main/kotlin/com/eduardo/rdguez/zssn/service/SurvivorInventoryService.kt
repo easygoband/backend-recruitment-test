@@ -6,6 +6,7 @@ import com.eduardo.rdguez.zssn.model.request.ItemsRequest
 
 interface SurvivorInventoryService {
 
+  fun findAllSurvivorInventory(): List<SurvivorInventory>
   fun saveInventory(survivorInventory: SurvivorInventory): SurvivorInventory
   fun assignInventory(survivor: Survivor, itemsRequest: ItemsRequest): List<SurvivorInventory>
 

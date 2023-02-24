@@ -4,6 +4,9 @@ object ApiConstants {
   /* Regex */
   const val LETTERS_REGEX: String = "^[A-Za-zÀ-ÿ ]+$"
 
+  /* Formats */
+  const val TWO_DECIMAL_FORMAT: String = "%.2f"
+
   /* Infection */
   const val REPORTING_LIMIT: Int = 3
 

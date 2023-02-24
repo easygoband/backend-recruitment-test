@@ -63,7 +63,7 @@ class ReportServiceImpl(
 
   override fun findAverageItemsBySurvivor(): List<ItemAverage> {
     val uninfected: Int = survivorService.countAllUninfectedSurvivors()
-    val survivorInventory: List<SurvivorInventory> = survivorInventoryService.findAllInventory()
+    val survivorInventory: List<SurvivorInventory> = survivorInventoryService.findAllSurvivorInventory()
 
     return survivorInventory.groupBy { it.item }
       .map { group ->
