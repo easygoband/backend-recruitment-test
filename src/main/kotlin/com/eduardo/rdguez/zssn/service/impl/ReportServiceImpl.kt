@@ -68,10 +68,6 @@ class ReportServiceImpl(
     }
   }
 
-  fun sumInventoryPoints(survivorInventory: List<SurvivorInventory>): Int {
-    return survivorInventory.sumOf { it.quantity * it.item.points }
-  }
-
   override fun findAverageItemsBySurvivor(): List<ItemAverage> {
     logger.info { "Find average items by survivor" }
 
@@ -88,6 +84,10 @@ class ReportServiceImpl(
           average = average.toInt()
         )
       }
+  }
+
+  fun sumInventoryPoints(survivorInventory: List<SurvivorInventory>): Int {
+    return survivorInventory.sumOf { it.quantity * it.item.points }
   }
 
 }
