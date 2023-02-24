@@ -6,8 +6,8 @@ import com.eduardo.rdguez.zssn.domain.SurvivorInventory
 import com.eduardo.rdguez.zssn.mapper.SurvivorInventoryMapper
 import com.eduardo.rdguez.zssn.model.request.ItemsRequest
 import com.eduardo.rdguez.zssn.repository.SurvivorInventoryRepository
-import com.eduardo.rdguez.zssn.service.ItemService
 import com.eduardo.rdguez.zssn.service.SurvivorInventoryService
+import com.eduardo.rdguez.zssn.service.ItemService
 import java.util.*
 import kotlin.reflect.full.memberProperties
 import org.springframework.stereotype.Service
@@ -23,6 +23,10 @@ class SurvivorInventoryServiceImpl(
   @Transactional(readOnly = true)
   override fun findAllSurvivorInventory(): List<SurvivorInventory> {
     return survivorInventoryRepository.findAll()
+  }
+
+  override fun findInventoryBySurvivor(survivor: Survivor): List<SurvivorInventory> {
+    return survivorInventoryRepository.findAllBySurvivor(survivor)
   }
 
   @Transactional(propagation = Propagation.NESTED)
