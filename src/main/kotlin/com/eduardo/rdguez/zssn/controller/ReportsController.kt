@@ -17,17 +17,17 @@ class ReportsController(
 
   @GetMapping("/infections")
   fun findInfections(): InfectionsResponse {
-    return reportService.findInfections()
+    return reportService.findInfectedSurvivorsPercentage()
   }
 
   @GetMapping("/no-infections")
   fun findNotInfections(): NoInfectionsResponse {
-    return reportService.findNoInfections()
+    return reportService.findUninfectedSurvivorsPercentage()
   }
 
   @GetMapping("/lost-points")
   fun findLostPoints(): List<LostPointsResponse> {
-    return reportService.findLostPoints()
+    return reportService.findLostPointsByInfectedSurvivor()
   }
 
   @GetMapping("/items-average")
