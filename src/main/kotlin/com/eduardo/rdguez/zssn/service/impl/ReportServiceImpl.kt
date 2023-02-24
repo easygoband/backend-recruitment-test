@@ -11,6 +11,7 @@ import com.eduardo.rdguez.zssn.service.ReportService
 import com.eduardo.rdguez.zssn.service.SurvivorInventoryService
 import com.eduardo.rdguez.zssn.service.SurvivorService
 import com.eduardo.rdguez.zssn.util.ArithmeticUtil
+import com.eduardo.rdguez.zssn.util.DecimalUtil
 import org.springframework.stereotype.Service
 
 @Service
@@ -22,7 +23,7 @@ class ReportServiceImpl(
   override fun findInfectedSurvivorsPercentage(): InfectionsResponse {
     val uninfected: Long = survivorService.countAllUninfectedSurvivors()
     val infected: Long = survivorService.countAllInfectedSurvivors()
-    val percentage: String = ArithmeticUtil.percentage(
+    val percentage: Double = ArithmeticUtil.percentage(
       infected.toDouble(),
       uninfected.toDouble(),
     )
@@ -30,14 +31,14 @@ class ReportServiceImpl(
     return InfectionsResponse(
       survivors = uninfected,
       infections = infected,
-      percentage = percentage
+      percentage = DecimalUtil.truncate(percentage)
     )
   }
 
   override fun findUninfectedSurvivorsPercentage(): NoInfectionsResponse {
     val survivors: Long = survivorService.countAllSurvivors()
     val uninfected: Long = survivorService.countAllUninfectedSurvivors()
-    val percentage: String = ArithmeticUtil.percentage(
+    val percentage: Double = ArithmeticUtil.percentage(
       uninfected.toDouble(),
       survivors.toDouble(),
     )
@@ -45,7 +46,7 @@ class ReportServiceImpl(
     return NoInfectionsResponse(
       survivors = survivors,
       noInfections = uninfected,
-      percentage = percentage
+      percentage = DecimalUtil.truncate(percentage)
     )
   }
 
@@ -70,10 +71,11 @@ class ReportServiceImpl(
     return survivorInventory.groupBy { it.item }
       .map { group ->
         val totalQuantity: Int = group.value.sumOf { it.quantity }
-        val average: String = ArithmeticUtil.average(totalQuantity.toDouble(), uninfected.toDouble())
+        val average: Double = ArithmeticUtil.average(totalQuantity.toDouble(), uninfected.toDouble())
+
         ItemAverage(
           name = group.key.name,
-          average = average
+          average = DecimalUtil.truncate(average)
         )
       }
   }
