@@ -13,9 +13,9 @@ class OpenApiConfig {
     return OpenAPI()
       .info(
         Info()
-          .title("Spring Dev API")
+          .title("ZSSN (Zombie Survival Social Network) API")
           .version("0.1.0")
-          .description("Spring Dev API v0.1.0")
+          .description("ZSSN (Zombie Survival Social Network) API v0.1.0")
       )
   }
 
