@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class InfectionsResponse(
   @JsonProperty("survivors")
-  val survivors: Int,
+  val survivors: Long,
 
   @JsonProperty("infections")
-  val infections: Int,
+  val infections: Long,
 
   @JsonProperty("percentage")
   val percentage: String

@@ -7,7 +7,7 @@ data class NoInfectionsResponse(
   val survivors: Long,
 
   @JsonProperty("no_infections")
-  val noInfections: Int,
+  val noInfections: Long,
 
   @JsonProperty("percentage")
   val percentage: String

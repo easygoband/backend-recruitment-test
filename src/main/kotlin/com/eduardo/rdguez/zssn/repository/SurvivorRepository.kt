@@ -10,7 +10,7 @@ interface SurvivorRepository : JpaRepository<Survivor, Long> {
 
   fun findAllByIsInfectedTrue(): List<Survivor>
   fun findByIdAndIsInfectedFalse(id: Long): Optional<Survivor>
-  fun countByIsInfectedFalse(): Int
-  fun countByIsInfectedTrue(): Int
+  fun countByIsInfectedFalse(): Long
+  fun countByIsInfectedTrue(): Long
 
 }

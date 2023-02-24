@@ -20,8 +20,8 @@ class ReportServiceImpl(
 ) : ReportService {
 
   override fun findInfectedSurvivorsPercentage(): InfectionsResponse {
-    val uninfected: Int = survivorService.countAllUninfectedSurvivors()
-    val infected: Int = survivorService.countAllInfectedSurvivors()
+    val uninfected: Long = survivorService.countAllUninfectedSurvivors()
+    val infected: Long = survivorService.countAllInfectedSurvivors()
     val percentage: String = ArithmeticUtil.percentage(
       infected.toDouble(),
       uninfected.toDouble(),
@@ -36,7 +36,7 @@ class ReportServiceImpl(
 
   override fun findUninfectedSurvivorsPercentage(): NoInfectionsResponse {
     val survivors: Long = survivorService.countAllSurvivors()
-    val uninfected: Int = survivorService.countAllUninfectedSurvivors()
+    val uninfected: Long = survivorService.countAllUninfectedSurvivors()
     val percentage: String = ArithmeticUtil.percentage(
       uninfected.toDouble(),
       survivors.toDouble(),
@@ -64,13 +64,13 @@ class ReportServiceImpl(
   }
 
   override fun findAverageItemsBySurvivor(): List<ItemAverage> {
-    val uninfected: Int = survivorService.countAllUninfectedSurvivors()
+    val uninfected: Long = survivorService.countAllUninfectedSurvivors()
     val survivorInventory: List<SurvivorInventory> = survivorInventoryService.findAllSurvivorInventory()
 
     return survivorInventory.groupBy { it.item }
       .map { group ->
         val totalQuantity: Int = group.value.sumOf { it.quantity }
-        val average: String = ArithmeticUtil.average(totalQuantity.toDouble(), uninfected)
+        val average: String = ArithmeticUtil.average(totalQuantity.toDouble(), uninfected.toDouble())
         ItemAverage(
           name = group.key.name,
           average = average
