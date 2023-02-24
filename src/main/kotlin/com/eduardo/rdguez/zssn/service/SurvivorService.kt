@@ -12,7 +12,7 @@ interface SurvivorService {
   fun saveSurvivor(survivorRequest: SurvivorRequest): SurvivorDto
   fun updateSurvivorLocation(id: Long, locationRequest: LocationRequest): SurvivorDto
   fun updateSurvivorToInfected(id: Long): SurvivorDto
-  fun countAllInfected(): Int
-  fun countAllUninfected(): Int
+  fun countAllInfectedSurvivors(): Int
+  fun countAllUninfectedSurvivors(): Int
 
 }

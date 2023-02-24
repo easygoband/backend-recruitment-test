@@ -19,8 +19,8 @@ class ReportServiceImpl(
 ) : ReportService {
 
   override fun findInfections(): InfectionsResponse {
-    val uninfected: Int = survivorService.countAllUninfected()
-    val infected: Int = survivorService.countAllInfected()
+    val uninfected: Int = survivorService.countAllUninfectedSurvivors()
+    val infected: Int = survivorService.countAllInfectedSurvivors()
     val percentage: String = ArithmeticUtil.percentage(
       infected.toDouble(),
       uninfected.toDouble(),
@@ -34,7 +34,7 @@ class ReportServiceImpl(
   }
 
   override fun findNoInfections(): NoInfectionsResponse {
-    val uninfected: Int = survivorService.countAllUninfected()
+    val uninfected: Int = survivorService.countAllUninfectedSurvivors()
     val percentage: String = ArithmeticUtil.percentage(
       uninfected.toDouble(),
       uninfected.toDouble(),
