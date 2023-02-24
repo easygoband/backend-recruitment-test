@@ -8,5 +8,6 @@ import com.eduardo.rdguez.zssn.model.response.NoInfectionsResponse
 interface ReportService {
 
   fun findInfections(): InfectionsResponse
+  fun findNoInfections(): NoInfectionsResponse
 
 }
