@@ -3,7 +3,7 @@ package com.eduardo.rdguez.zssn.model.request
 import com.fasterxml.jackson.annotation.JsonProperty
 import javax.validation.constraints.NotNull
 
-class LocationRequest(
+data class LocationRequest(
   @JsonProperty("latitude")
   @field:NotNull
   val latitude: Int,
