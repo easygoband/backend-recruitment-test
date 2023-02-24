@@ -7,5 +7,5 @@ data class ItemAverage(
   val name: String,
 
   @JsonProperty("average")
-  val average: String
+  val average: Int
 )

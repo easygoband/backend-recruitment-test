@@ -75,7 +75,7 @@ class ReportServiceImpl(
 
         ItemAverage(
           name = group.key.name,
-          average = DecimalUtil.truncate(average)
+          average = average.toInt()
         )
       }
   }
