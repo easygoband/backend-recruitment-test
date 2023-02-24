@@ -5,6 +5,7 @@ import com.eduardo.rdguez.zssn.domain.Survivor
 import com.eduardo.rdguez.zssn.dto.SurvivorDto
 import com.eduardo.rdguez.zssn.exception.EntityNotFoundException
 import com.eduardo.rdguez.zssn.mapper.SurvivorMapper
+import com.eduardo.rdguez.zssn.model.request.LocationRequest
 import com.eduardo.rdguez.zssn.model.request.SurvivorRequest
 import com.eduardo.rdguez.zssn.repository.SurvivorRepository
 import com.eduardo.rdguez.zssn.service.LocationService
@@ -21,6 +22,13 @@ class SurvivorServiceImpl(
   private val locationService: LocationService
 ) : SurvivorService {
 
+  @Transactional(readOnly = true)
+  override fun findById(id: Long): Survivor {
+    return survivorRepository.findByIdAndIsInfectedFalse(id).orElseThrow {
+      throw EntityNotFoundException("Survivor with ID: $id not found or is infected")
+    }
+  }
+
   @Transactional(propagation = Propagation.REQUIRED)
   override fun saveSurvivor(survivorRequest: SurvivorRequest): SurvivorDto {
     val lastLocation: Location = locationService.saveLocation(survivorRequest.lastLocation)
@@ -28,6 +36,16 @@ class SurvivorServiceImpl(
     val survivorCreated: Survivor = survivorRepository.save(survivor)
     survivorInventoryService.assignInventory(survivorCreated, survivorRequest.items)
     return SurvivorMapper.toDetailedDto(survivorCreated)
+  }
+
+  @Transactional(propagation = Propagation.REQUIRED)
+  override fun updateLocation(id: Long, locationRequest: LocationRequest): SurvivorDto {
+    val survivor: Survivor = findById(id)
+    with(survivor.lastLocation) {
+      latitude = locationRequest.latitude
+      longitude = locationRequest.longitude
+    }
+    return SurvivorMapper.toDetailedDto(survivorRepository.save(survivor))
   }
 
 }
