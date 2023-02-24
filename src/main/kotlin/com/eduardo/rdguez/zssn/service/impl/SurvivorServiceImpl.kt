@@ -23,7 +23,7 @@ class SurvivorServiceImpl(
 ) : SurvivorService {
 
   @Transactional(readOnly = true)
-  override fun findById(id: Long): Survivor {
+  override fun findSurvivorById(id: Long): Survivor {
     return survivorRepository.findByIdAndIsInfectedFalse(id).orElseThrow {
       throw EntityNotFoundException("Survivor with ID: $id not found or is infected")
     }
@@ -39,8 +39,8 @@ class SurvivorServiceImpl(
   }
 
   @Transactional(propagation = Propagation.REQUIRED)
-  override fun updateLocation(id: Long, locationRequest: LocationRequest): SurvivorDto {
-    val survivor: Survivor = findById(id)
+  override fun updateSurvivorLocation(id: Long, locationRequest: LocationRequest): SurvivorDto {
+    val survivor: Survivor = findSurvivorById(id)
     with(survivor.lastLocation) {
       latitude = locationRequest.latitude
       longitude = locationRequest.longitude
@@ -50,7 +50,7 @@ class SurvivorServiceImpl(
 
   @Transactional(propagation = Propagation.MANDATORY)
   override fun updateSurvivorToInfected(id: Long): SurvivorDto {
-    val survivor: Survivor = findById(id)
+    val survivor: Survivor = findSurvivorById(id)
     survivor.isInfected = true
     return SurvivorMapper.toDetailedDto(survivorRepository.save(survivor))
   }

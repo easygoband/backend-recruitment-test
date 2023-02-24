@@ -28,7 +28,7 @@ class SurvivorsController(
     @PathVariable(name = "id") id: Long,
     @Valid @RequestBody locationRequest: LocationRequest
   ): SurvivorDto {
-    return survivorService.updateLocation(id, locationRequest)
+    return survivorService.updateSurvivorLocation(id, locationRequest)
   }
 
 }

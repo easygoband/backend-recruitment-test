@@ -7,9 +7,9 @@ import com.eduardo.rdguez.zssn.model.request.SurvivorRequest
 
 interface SurvivorService {
 
-  fun findById(id: Long): Survivor
+  fun findSurvivorById(id: Long): Survivor
   fun saveSurvivor(survivorRequest: SurvivorRequest): SurvivorDto
-  fun updateLocation(id: Long, locationRequest: LocationRequest): SurvivorDto
+  fun updateSurvivorLocation(id: Long, locationRequest: LocationRequest): SurvivorDto
   fun updateSurvivorToInfected(id: Long): SurvivorDto
 
 }
