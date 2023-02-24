@@ -23,6 +23,7 @@ dependencies {
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
   implementation("org.jetbrains.kotlin:kotlin-reflect")
   implementation("org.springdoc:springdoc-openapi-ui:1.6.12")
+  implementation("io.github.microutils:kotlin-logging:2.0.11")
   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
   developmentOnly("org.springframework.boot:spring-boot-devtools")
   runtimeOnly("com.h2database:h2")
