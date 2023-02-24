@@ -6,20 +6,17 @@ class ArithmeticUtil {
   companion object {
     fun percentage(
       part: Double,
-      whole: Double,
-      format: String = ApiConstants.TWO_DECIMAL_FORMAT
-    ): String {
-      val percentage = (part / whole) * ApiConstants.ONE_HUNDRED
-      return String.format(format, percentage)
+      whole: Double
+    ): Double {
+      return (part / whole) * ApiConstants.ONE_HUNDRED
     }
 
     fun average(
       sum: Double,
       count: Double,
       format: String = ApiConstants.TWO_DECIMAL_FORMAT
-    ): String {
-      val average = sum / count
-      return String.format(format, average)
+    ): Double {
+      return sum / count
     }
   }
 }
