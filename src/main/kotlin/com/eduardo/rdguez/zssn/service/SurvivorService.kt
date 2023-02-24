@@ -10,5 +10,6 @@ interface SurvivorService {
   fun findById(id: Long): Survivor
   fun saveSurvivor(survivorRequest: SurvivorRequest): SurvivorDto
   fun updateLocation(id: Long, locationRequest: LocationRequest): SurvivorDto
+  fun updateSurvivorToInfected(id: Long): SurvivorDto
 
 }

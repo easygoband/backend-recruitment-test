@@ -48,4 +48,11 @@ class SurvivorServiceImpl(
     return SurvivorMapper.toDetailedDto(survivorRepository.save(survivor))
   }
 
+  @Transactional(propagation = Propagation.MANDATORY)
+  override fun updateSurvivorToInfected(id: Long): SurvivorDto {
+    val survivor: Survivor = findById(id)
+    survivor.isInfected = true
+    return SurvivorMapper.toDetailedDto(survivorRepository.save(survivor))
+  }
+
 }
