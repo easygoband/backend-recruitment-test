@@ -13,9 +13,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 class RestExceptionHandler : ResponseEntityExceptionHandler() {
 
   @Override
-  @ExceptionHandler(EntityNotFoundException::class)
+  @ExceptionHandler(NotFoundException::class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  fun handleEntityNotFound(ex: EntityNotFoundException): ResponseEntity<ApiErrorResponse> {
+  fun handleEntityNotFound(ex: NotFoundException): ResponseEntity<ApiErrorResponse> {
     return buildResponseEntity(ApiErrorResponse(HttpStatus.NOT_FOUND, ex))
   }
 

@@ -3,7 +3,7 @@ package com.eduardo.rdguez.zssn.service.impl
 import com.eduardo.rdguez.zssn.domain.Location
 import com.eduardo.rdguez.zssn.domain.Survivor
 import com.eduardo.rdguez.zssn.dto.SurvivorDto
-import com.eduardo.rdguez.zssn.exception.EntityNotFoundException
+import com.eduardo.rdguez.zssn.exception.NotFoundException
 import com.eduardo.rdguez.zssn.mapper.SurvivorMapper
 import com.eduardo.rdguez.zssn.model.request.LocationRequest
 import com.eduardo.rdguez.zssn.model.request.SurvivorRequest
@@ -30,7 +30,7 @@ class SurvivorServiceImpl(
   @Transactional(readOnly = true)
   override fun findSurvivorById(id: Long): Survivor {
     return survivorRepository.findByIdAndIsInfectedFalse(id).orElseThrow {
-      throw EntityNotFoundException("Survivor with ID: $id not found or is infected")
+      throw NotFoundException("Survivor with ID: $id not found or is infected")
     }
   }
 
