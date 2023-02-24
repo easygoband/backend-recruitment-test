@@ -12,6 +12,7 @@ import com.eduardo.rdguez.zssn.service.SurvivorInventoryService
 import com.eduardo.rdguez.zssn.service.SurvivorService
 import com.eduardo.rdguez.zssn.util.ArithmeticUtil
 import com.eduardo.rdguez.zssn.util.DecimalUtil
+import mu.KotlinLogging
 import org.springframework.stereotype.Service
 
 @Service
@@ -19,8 +20,11 @@ class ReportServiceImpl(
   private val survivorService: SurvivorService,
   private val survivorInventoryService: SurvivorInventoryService
 ) : ReportService {
+  private val logger = KotlinLogging.logger {}
 
   override fun findInfectedSurvivorsPercentage(): InfectionsResponse {
+    logger.info { "Find infected survivors percentage" }
+
     val uninfected: Long = survivorService.countAllUninfectedSurvivors()
     val infected: Long = survivorService.countAllInfectedSurvivors()
     val percentage: Double = ArithmeticUtil.percentage(
@@ -36,6 +40,8 @@ class ReportServiceImpl(
   }
 
   override fun findUninfectedSurvivorsPercentage(): NoInfectionsResponse {
+    logger.info { "Find uninfected survivors percentage" }
+
     val survivors: Long = survivorService.countAllSurvivors()
     val uninfected: Long = survivorService.countAllUninfectedSurvivors()
     val percentage: Double = ArithmeticUtil.percentage(
@@ -51,6 +57,8 @@ class ReportServiceImpl(
   }
 
   override fun findLostPointsByInfectedSurvivor(): List<LostPointsResponse> {
+    logger.info { "Find lost points by infected survivor" }
+
     val infectedList: List<Survivor> = survivorService.findAllInfectedSurvivors()
     return infectedList.map { infected ->
       LostPointsResponse(
@@ -65,6 +73,8 @@ class ReportServiceImpl(
   }
 
   override fun findAverageItemsBySurvivor(): List<ItemAverage> {
+    logger.info { "Find average items by survivor" }
+
     val uninfected: Long = survivorService.countAllUninfectedSurvivors()
     val survivorInventory: List<SurvivorInventory> = survivorInventoryService.findAllSurvivorInventory()
 
