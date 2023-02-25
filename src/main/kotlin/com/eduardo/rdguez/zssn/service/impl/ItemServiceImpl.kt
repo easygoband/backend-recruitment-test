@@ -6,6 +6,7 @@ import com.eduardo.rdguez.zssn.service.ItemService
 import java.util.*
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ItemServiceImpl(
@@ -13,6 +14,7 @@ class ItemServiceImpl(
 ) : ItemService {
   private val logger = KotlinLogging.logger {}
 
+  @Transactional(readOnly = true)
   override fun findItemByName(name: String): Optional<Item> {
     logger.debug { "Find item by name: $name" }
 
