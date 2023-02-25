@@ -10,6 +10,7 @@ class SurvivorDto(
   val name: String,
   val age: Int,
   val gender: Gender,
+  @JsonProperty("is_infected")
   var isInfected: Boolean,
   @JsonProperty("last_location")
   val lastLocation: LocationDto? = null,
