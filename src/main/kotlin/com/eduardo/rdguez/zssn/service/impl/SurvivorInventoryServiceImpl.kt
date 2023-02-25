@@ -29,12 +29,6 @@ class SurvivorInventoryServiceImpl(
     return survivorInventoryRepository.findAll()
   }
 
-  override fun findInventoryBySurvivor(survivor: Survivor): List<SurvivorInventory> {
-    logger.info { "Find inventory by survivor with ID: ${survivor.id}" }
-
-    return survivorInventoryRepository.findAllBySurvivor(survivor)
-  }
-
   @Transactional(propagation = Propagation.NESTED)
   override fun saveInventory(survivorInventory: SurvivorInventory): SurvivorInventory {
     logger.info { "Save survivor inventory with ID: ${survivorInventory.survivor.id}" }
