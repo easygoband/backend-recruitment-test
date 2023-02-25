@@ -40,6 +40,7 @@ class SurvivorServiceImpl(
     }
   }
 
+  @Transactional(readOnly = true)
   override fun countAllSurvivors(): Long {
     logger.info { "Count all survivors" }
 
@@ -61,12 +62,19 @@ class SurvivorServiceImpl(
   }
 
   @Transactional(propagation = Propagation.REQUIRED)
+  override fun saveSurvivor(survivor: Survivor): Survivor {
+    logger.info { "Save a survivor's data with ID: ${survivor.id}" }
+    return survivorRepository.save(survivor)
+  }
+
+  @Transactional(propagation = Propagation.REQUIRED)
   override fun saveSurvivor(survivorRequest: SurvivorRequest): SurvivorDto {
     logger.info { "Save a survivor by request: $survivorRequest" }
 
     val lastLocation: Location = locationService.saveLocation(survivorRequest.lastLocation)
     val survivor: Survivor = SurvivorMapper.toEntity(survivorRequest, lastLocation)
-    val survivorCreated: Survivor = survivorRepository.save(survivor)
+    val survivorCreated: Survivor = saveSurvivor(survivor)
+
     survivorInventoryService.assignInventory(survivorCreated, survivorRequest.items)
     return SurvivorMapper.toDetailedDto(survivorCreated)
   }

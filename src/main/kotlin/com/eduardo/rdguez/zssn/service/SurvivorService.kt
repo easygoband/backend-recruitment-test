@@ -10,6 +10,7 @@ interface SurvivorService {
   fun findAllInfectedSurvivors(): List<Survivor>
   fun findSurvivorById(id: Long): Survivor
   fun saveSurvivor(survivorRequest: SurvivorRequest): SurvivorDto
+  fun saveSurvivor(survivor: Survivor): Survivor
   fun updateSurvivorLocation(id: Long, locationRequest: LocationRequest): SurvivorDto
   fun updateSurvivorToInfected(id: Long): SurvivorDto
   fun countAllInfectedSurvivors(): Long
