@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class ReportServiceImpl(
-  private val survivorService: SurvivorService,
-  private val survivorInventoryService: SurvivorInventoryService
+  private val survivorInventoryService: SurvivorInventoryService,
+  private val survivorService: SurvivorService
 ) : ReportService {
   private val logger = KotlinLogging.logger {}
 
@@ -63,7 +63,7 @@ class ReportServiceImpl(
     return infectedList.map { infected ->
       LostPointsResponse(
         infected = SurvivorMapper.toDto(infected),
-        lostPoints = sumInventoryPoints(infected.survivorInventory)
+        lostPoints = getInventoryPoints(infected.survivorInventory)
       )
     }
   }
@@ -71,8 +71,8 @@ class ReportServiceImpl(
   override fun findAverageItemsBySurvivor(): List<ItemAverage> {
     logger.info { "Find average items by survivor" }
 
-    val uninfected: Long = survivorService.countAllUninfectedSurvivors()
     val survivorInventory: List<SurvivorInventory> = survivorInventoryService.findAllSurvivorInventory()
+    val uninfected: Long = survivorService.countAllUninfectedSurvivors()
 
     return survivorInventory.groupBy { it.item }
       .map { group ->
@@ -86,7 +86,7 @@ class ReportServiceImpl(
       }
   }
 
-  fun sumInventoryPoints(survivorInventory: List<SurvivorInventory>): Int {
+  fun getInventoryPoints(survivorInventory: List<SurvivorInventory>): Int {
     return survivorInventory.sumOf { it.quantity * it.item.points }
   }
 
