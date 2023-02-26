@@ -28,7 +28,7 @@ class LocationServiceSpec extends Specification {
   @Rollback(true)
   Should "Spec 1 save a location"() {
     given:
-    def locationRepository = Mock(LocationRepository)
+    LocationRepository locationRepository = Mock(LocationRepository)
     locationRepository.save(_ as Location) >> savedLocation
     locationService.locationRepository = locationRepository
     when:
