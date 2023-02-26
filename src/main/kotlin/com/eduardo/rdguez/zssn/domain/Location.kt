@@ -15,8 +15,8 @@ class Location(
   var id: Long? = null,
 
   @Column(name = "latitude")
-  var latitude: Int,
+  var latitude: Double,
 
   @Column(name = "longitude")
-  var longitude: Int,
+  var longitude: Double,
 )
