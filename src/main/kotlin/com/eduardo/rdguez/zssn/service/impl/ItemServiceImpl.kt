@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ItemServiceImpl(
-  private val itemRepository: ItemRepository
+  private var itemRepository: ItemRepository
 ) : ItemService {
   private val logger = KotlinLogging.logger {}
 
@@ -20,5 +20,4 @@ class ItemServiceImpl(
 
     return itemRepository.findByNameIgnoreCase(name)
   }
-
 }
