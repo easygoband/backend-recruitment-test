@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class InfectionLogServiceImpl(
-  private val infectionLogRepository: InfectionLogRepository,
+  private var infectionLogRepository: InfectionLogRepository,
 ) : InfectionLogService {
   private val logger = KotlinLogging.logger {}
 
