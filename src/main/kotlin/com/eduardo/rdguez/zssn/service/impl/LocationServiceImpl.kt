@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class LocationServiceImpl(
-  private val locationRepository: LocationRepository
+  private var locationRepository: LocationRepository
 ) : LocationService {
   private val logger = KotlinLogging.logger {}
 
