@@ -9,14 +9,21 @@ import com.eduardo.rdguez.zssn.model.request.ItemsRequest
 import com.eduardo.rdguez.zssn.model.response.ExchangeResponse
 import com.eduardo.rdguez.zssn.service.ExchangeService
 import com.eduardo.rdguez.zssn.service.SurvivorService
+import mu.KotlinLogging
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Propagation
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ExchangeServiceImpl(
   private val survivorService: SurvivorService,
 ) : ExchangeService {
+  private val logger = KotlinLogging.logger {}
 
-  override fun exchangeItems(exchangeRequest: ExchangeRequest): ExchangeResponse {
+  @Transactional(propagation = Propagation.REQUIRED)
+  override fun itemsExchange(exchangeRequest: ExchangeRequest): ExchangeResponse {
+    logger.info { "Items exchange initiated"}
+
     val sender: Survivor = survivorService.findSurvivorById(exchangeRequest.senderId)
     val receiver: Survivor = survivorService.findSurvivorById(exchangeRequest.receiverId)
 
@@ -26,15 +33,18 @@ class ExchangeServiceImpl(
     if (validateExchangePoints(sender, receiver, exchangeRequest))
       throw BadRequestException("Exchange points must be equal")
 
-    updateInventoryQuantities(sender.survivorInventory, exchangeRequest.senderItems, false)
-    updateInventoryQuantities(receiver.survivorInventory, exchangeRequest.receiverItems, true)
+    val senderInventory: List<SurvivorInventory> = updateInventoryQuantities(
+      sender.survivorInventory, exchangeRequest.senderItems, false
+    )
+    val receiverInventory: List<SurvivorInventory> = updateInventoryQuantities(
+      receiver.survivorInventory, exchangeRequest.receiverItems, true
+    )
 
-    survivorService.saveSurvivor(sender)
-    survivorService.saveSurvivor(receiver)
+    updateSurvivorInventory(sender, receiver)
 
     return ExchangeResponse(
-      senderInventory = SurvivorInventoryMapper.toDto(sender.survivorInventory),
-      receiverInventory = SurvivorInventoryMapper.toDto(receiver.survivorInventory)
+      senderInventory = SurvivorInventoryMapper.toDto(senderInventory),
+      receiverInventory = SurvivorInventoryMapper.toDto(receiverInventory)
     )
   }
 
@@ -73,6 +83,13 @@ class ExchangeServiceImpl(
 
       inventory
     }
+  }
+
+  fun updateSurvivorInventory(sender: Survivor, receiver: Survivor) {
+    logger.info { "Update survivor inventory"}
+
+    survivorService.saveSurvivor(sender)
+    survivorService.saveSurvivor(receiver)
   }
 
   fun validateExchangePoints(

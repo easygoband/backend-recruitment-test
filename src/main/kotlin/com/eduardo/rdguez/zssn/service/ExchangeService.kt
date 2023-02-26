@@ -5,6 +5,6 @@ import com.eduardo.rdguez.zssn.model.response.ExchangeResponse
 
 interface ExchangeService {
 
-  fun exchangeItems(exchangeRequest: ExchangeRequest): ExchangeResponse
+  fun itemsExchange(exchangeRequest: ExchangeRequest): ExchangeResponse
 
 }

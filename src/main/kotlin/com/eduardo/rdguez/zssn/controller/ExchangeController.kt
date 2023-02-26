@@ -37,7 +37,7 @@ class ExchangeController(
       throw BadRequestException("$errors")
     }
 
-    return exchangeService.exchangeItems(exchangeRequest)
+    return exchangeService.itemsExchange(exchangeRequest)
   }
 
 }
