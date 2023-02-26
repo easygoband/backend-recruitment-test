@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
   id("org.springframework.boot") version "2.6.3"
   id("io.spring.dependency-management") version "1.0.11.RELEASE"
+  id("groovy")
   kotlin("jvm") version "1.6.10"
   kotlin("plugin.spring") version "1.6.10"
   kotlin("plugin.jpa") version "1.6.10"
@@ -25,9 +26,12 @@ dependencies {
   implementation("org.springdoc:springdoc-openapi-ui:1.6.12")
   implementation("io.github.microutils:kotlin-logging:2.0.11")
   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+  implementation("org.codehaus.groovy:groovy:3.0.15")
   developmentOnly("org.springframework.boot:spring-boot-devtools")
   runtimeOnly("com.h2database:h2")
   testImplementation("org.springframework.boot:spring-boot-starter-test")
+  testImplementation("org.spockframework:spock-core:2.0-groovy-3.0")
+  testImplementation("org.spockframework:spock-spring:2.0-groovy-3.0")
 }
 
 tasks.withType<KotlinCompile> {
