@@ -9,15 +9,15 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "item")
-class Item {
+class Item (
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", nullable = false)
-  var id: Long? = null
+  var id: Long? = null,
 
   @Column(name = "name", nullable = false)
-  lateinit var name: String
+  var name: String,
 
   @Column(name = "points", nullable = false)
-  var points: Int = 0
-}
+  var points: Int
+)
