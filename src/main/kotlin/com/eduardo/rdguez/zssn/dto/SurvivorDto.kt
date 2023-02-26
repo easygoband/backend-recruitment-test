@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-class SurvivorDto(
+data class SurvivorDto(
   val id: Long,
   val name: String,
   val age: Int,
