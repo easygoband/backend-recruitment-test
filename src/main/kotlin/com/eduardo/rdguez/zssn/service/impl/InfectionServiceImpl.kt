@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class InfectionServiceImpl(
-  private val infectionLogService: InfectionLogService,
-  private val survivorService: SurvivorService
+  private var infectionLogService: InfectionLogService,
+  private var survivorService: SurvivorService
 ) : InfectionService {
   private val logger = KotlinLogging.logger {}
 
@@ -22,8 +22,8 @@ class InfectionServiceImpl(
   override fun reportSurvivorInfection(infectionLogRequest: InfectionLogRequest) {
     logger.info { "Report survivor infection by request: $infectionLogRequest" }
 
-    val speaker = survivorService.findSurvivorById(infectionLogRequest.speakerId)
-    val infected = survivorService.findSurvivorById(infectionLogRequest.infectedId)
+    val speaker: Survivor = survivorService.findSurvivorById(infectionLogRequest.speakerId)
+    val infected: Survivor = survivorService.findSurvivorById(infectionLogRequest.infectedId)
     infectionLogService.saveInfectionLog(speaker, infected)
 
     if (survivorIsInfected(infected)) {
@@ -31,7 +31,6 @@ class InfectionServiceImpl(
     }
   }
 
-  @Transactional(readOnly = true)
   fun survivorIsInfected(survivor: Survivor): Boolean {
     logger.info { "Check if the survivor with ID: ${survivor.id} is infected" }
 
