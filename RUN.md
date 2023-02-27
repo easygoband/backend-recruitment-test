@@ -20,7 +20,7 @@ To start ZSSN app:
 * Runs this project as a Spring Boot application with `./gradlew bootRun`
 * Now you can visit [`localhost:8080/swagger-ui.html`](http://localhost:8080/swagger-ui.html) from your browser to view
   the **Swagger documentation**.
-  * Click on an endpoint to view its details, including input and output parameters, requests and responses, and more.
+    * Click on an endpoint to view its details, including input and output parameters, requests and responses, and more.
 
 **Note**: This app uses H2 DB so the data will be deleted when you restart or stop the app.
 

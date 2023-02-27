@@ -54,7 +54,6 @@ class SurvivorsController(
       ApiResponse(responseCode = "404", description = "Survivor not found"),
     ]
   )
-
   fun updateLocation(
     @PathVariable(name = "id") id: Long,
     @Valid @RequestBody locationRequest: LocationRequest,
