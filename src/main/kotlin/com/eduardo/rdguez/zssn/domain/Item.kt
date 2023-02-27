@@ -9,7 +9,7 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "item")
-class Item (
+class Item(
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", nullable = false)

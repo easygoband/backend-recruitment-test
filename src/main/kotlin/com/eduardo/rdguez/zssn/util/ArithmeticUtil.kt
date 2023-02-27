@@ -13,8 +13,7 @@ class ArithmeticUtil {
 
     fun average(
       sum: Double,
-      count: Double,
-      format: String = ApiConstants.TWO_DECIMAL_FORMAT
+      count: Double
     ): Double {
       return sum / count
     }

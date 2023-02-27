@@ -6,8 +6,8 @@ import com.eduardo.rdguez.zssn.domain.Survivor
 import com.eduardo.rdguez.zssn.domain.SurvivorInventory
 import com.eduardo.rdguez.zssn.dto.SurvivorDto
 import com.eduardo.rdguez.zssn.model.enums.Gender
-import com.eduardo.rdguez.zssn.model.response.InfectionsResponse
 import com.eduardo.rdguez.zssn.model.response.AverageItemResponse
+import com.eduardo.rdguez.zssn.model.response.InfectionsResponse
 import com.eduardo.rdguez.zssn.model.response.LostPointsResponse
 import com.eduardo.rdguez.zssn.model.response.NoInfectionsResponse
 import com.eduardo.rdguez.zssn.service.ReportService
@@ -69,7 +69,7 @@ class ReportServiceSpec extends Specification {
     assert response.noInfections == noInfectionsResponse.noInfections
     where:
     survivors << [10, 50]
-    uninfectedSurvivors << [9, 45]
+    uninfectedSurvivors << [9, 25]
     noInfectionsResponse << [
       new NoInfectionsResponse(10L, 9L, "90.00"),
       new NoInfectionsResponse(50L, 25L, "50.00")
@@ -126,23 +126,27 @@ class ReportServiceSpec extends Specification {
     then:
     assert averageItems == itemAverageResponse
     where:
-    survivorInventory << [[
-      new SurvivorInventory(1, survivorA, new Item(1, "water", 4), 10),
-      new SurvivorInventory(2, survivorA, new Item(2, "food", 2), 10),
-      new SurvivorInventory(3, survivorA, new Item(3, "medication", 2), 10),
-      new SurvivorInventory(4, survivorA, new Item(4, "ammunition", 1), 2),
-      new SurvivorInventory(5, survivorB, new Item(1, "water", 4), 15),
-      new SurvivorInventory(6, survivorB, new Item(2, "food", 2), 10),
-      new SurvivorInventory(7, survivorB, new Item(3, "medication", 2), 10),
-      new SurvivorInventory(8, survivorB, new Item(4, "ammunition", 1), 2)
-    ]]
+    survivorInventory << [
+      [
+        new SurvivorInventory(1, survivorA, new Item(1, "water", 4), 10),
+        new SurvivorInventory(2, survivorA, new Item(2, "food", 2), 10),
+        new SurvivorInventory(3, survivorA, new Item(3, "medication", 2), 10),
+        new SurvivorInventory(4, survivorA, new Item(4, "ammunition", 1), 2),
+        new SurvivorInventory(5, survivorB, new Item(1, "water", 4), 15),
+        new SurvivorInventory(6, survivorB, new Item(2, "food", 2), 10),
+        new SurvivorInventory(7, survivorB, new Item(3, "medication", 2), 10),
+        new SurvivorInventory(8, survivorB, new Item(4, "ammunition", 1), 2)
+      ]
+    ]
     uninfectedSurvivors << [2]
-    itemAverageResponse << [[
-      new AverageItemResponse("water", 12),
-      new AverageItemResponse("food", 10),
-      new AverageItemResponse("medication", 10),
-      new AverageItemResponse("ammunition", 2)
-    ]]
+    itemAverageResponse << [
+      [
+        new AverageItemResponse("water", 12),
+        new AverageItemResponse("food", 10),
+        new AverageItemResponse("medication", 10),
+        new AverageItemResponse("ammunition", 2)
+      ]
+    ]
   }
 
   @Shared

@@ -22,7 +22,7 @@ class ExchangeServiceImpl(
 
   @Transactional(propagation = Propagation.REQUIRED)
   override fun itemsExchange(exchangeRequest: ExchangeRequest): ExchangeResponse {
-    logger.info { "Items exchange initiated"}
+    logger.info { "Items exchange initiated" }
 
     val sender: Survivor = survivorService.findSurvivorById(exchangeRequest.senderId)
     val receiver: Survivor = survivorService.findSurvivorById(exchangeRequest.receiverId)
@@ -86,7 +86,7 @@ class ExchangeServiceImpl(
   }
 
   fun updateSurvivorInventory(sender: Survivor, receiver: Survivor) {
-    logger.info { "Update survivor inventory"}
+    logger.info { "Update survivor inventory" }
 
     survivorService.saveSurvivor(sender)
     survivorService.saveSurvivor(receiver)

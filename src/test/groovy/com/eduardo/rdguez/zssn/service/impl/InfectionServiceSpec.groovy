@@ -8,7 +8,6 @@ import com.eduardo.rdguez.zssn.service.InfectionLogService
 import com.eduardo.rdguez.zssn.service.InfectionService
 import com.eduardo.rdguez.zssn.service.SurvivorService
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.annotation.Rollback
 import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
 import spock.lang.Unroll
