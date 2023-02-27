@@ -2,7 +2,7 @@ package com.eduardo.rdguez.zssn.model.response
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class ItemAverage(
+data class AverageItemResponse(
   @JsonProperty("name")
   val name: String,
 

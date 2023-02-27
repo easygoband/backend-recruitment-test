@@ -1,7 +1,7 @@
 package com.eduardo.rdguez.zssn.controller
 
 import com.eduardo.rdguez.zssn.model.response.InfectionsResponse
-import com.eduardo.rdguez.zssn.model.response.ItemAverage
+import com.eduardo.rdguez.zssn.model.response.AverageItemResponse
 import com.eduardo.rdguez.zssn.model.response.LostPointsResponse
 import com.eduardo.rdguez.zssn.model.response.NoInfectionsResponse
 import com.eduardo.rdguez.zssn.service.ReportService
@@ -60,7 +60,7 @@ class ReportsController(
       ApiResponse(responseCode = "200", description = "Average items by survivor found"),
     ]
   )
-  fun findItemsAverage(): List<ItemAverage> {
+  fun findItemsAverage(): List<AverageItemResponse> {
     return reportService.findAverageItemsBySurvivor()
   }
 
