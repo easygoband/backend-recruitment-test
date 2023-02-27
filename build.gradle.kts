@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  id("org.springframework.boot") version "2.6.3"
+  id("org.springframework.boot") version "2.7.9"
   id("io.spring.dependency-management") version "1.0.11.RELEASE"
   id("groovy")
   kotlin("jvm") version "1.6.10"
@@ -11,7 +11,7 @@ plugins {
 
 group = "com.eduardo.rdguez"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_11
+java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
   mavenCentral()
@@ -37,7 +37,7 @@ dependencies {
 tasks.withType<KotlinCompile> {
   kotlinOptions {
     freeCompilerArgs = listOf("-Xjsr305=strict")
-    jvmTarget = "11"
+    jvmTarget = "1.8"
   }
 }
 
