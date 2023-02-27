@@ -18,9 +18,9 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class SurvivorServiceImpl(
-  private val survivorRepository: SurvivorRepository,
-  private val survivorInventoryService: SurvivorInventoryService,
-  private val locationService: LocationService
+  private var survivorRepository: SurvivorRepository,
+  private var survivorInventoryService: SurvivorInventoryService,
+  private var locationService: LocationService
 ) : SurvivorService {
   private val logger = KotlinLogging.logger {}
 
