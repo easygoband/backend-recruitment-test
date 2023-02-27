@@ -14,14 +14,16 @@ import com.eduardo.rdguez.zssn.util.ArithmeticUtil
 import com.eduardo.rdguez.zssn.util.DecimalUtil
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ReportServiceImpl(
-  private val survivorInventoryService: SurvivorInventoryService,
-  private val survivorService: SurvivorService
+  private var survivorInventoryService: SurvivorInventoryService,
+  private var survivorService: SurvivorService
 ) : ReportService {
   private val logger = KotlinLogging.logger {}
 
+  @Transactional(readOnly = true)
   override fun findInfectedSurvivorsPercentage(): InfectionsResponse {
     logger.info { "Find infected survivors percentage" }
 
@@ -39,6 +41,7 @@ class ReportServiceImpl(
     )
   }
 
+  @Transactional(readOnly = true)
   override fun findUninfectedSurvivorsPercentage(): NoInfectionsResponse {
     logger.info { "Find uninfected survivors percentage" }
 
@@ -56,6 +59,7 @@ class ReportServiceImpl(
     )
   }
 
+  @Transactional(readOnly = true)
   override fun findLostPointsByInfectedSurvivor(): List<LostPointsResponse> {
     logger.info { "Find lost points by infected survivor" }
 
@@ -68,6 +72,7 @@ class ReportServiceImpl(
     }
   }
 
+  @Transactional(readOnly = true)
   override fun findAverageItemsBySurvivor(): List<AverageItemResponse> {
     logger.info { "Find average items by survivor" }
 
