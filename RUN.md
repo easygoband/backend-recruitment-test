@@ -5,18 +5,20 @@
 
 ## Tech Specs
 
-- Java `17`
-- Kotlin `1.7.22`
+- Spring Boot `2.7.9`
+- Java `8`
+- Kotlin `1.6.10`
+- Groovy `3.0.15`
+- Spock Framework `2.0` 
 - Gradle `7.6`
-- Spring Boot `3.0.2`
 
-## Run
+## ZSSN 
 
-Runs this project as a Spring Boot application:
+To start ZSSN app:
+* Runs this project as a Spring Boot application with `./gradlew bootRun`
+* Now you can visit [`localhost:8080/swagger-ui.html`](http://localhost:8080/swagger-ui.html) from your browser.
 
-```sh
-./gradlew bootRun
-```
+**Note**: This app uses H2 DB so the data will be deleted when you restart or stop the app.
 
 ## Tests
 
