@@ -14,8 +14,8 @@ class OpenApiConfig {
       .info(
         Info()
           .title("ZSSN (Zombie Survival Social Network) API")
-          .version("0.1.0")
-          .description("ZSSN (Zombie Survival Social Network) API v0.1.0")
+          .version("1.0.0")
+          .description("ZSSN (Zombie Survival Social Network) API v1.0.0")
       )
   }
 
