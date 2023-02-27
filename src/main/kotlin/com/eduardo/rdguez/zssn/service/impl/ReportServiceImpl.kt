@@ -3,8 +3,8 @@ package com.eduardo.rdguez.zssn.service.impl
 import com.eduardo.rdguez.zssn.domain.Survivor
 import com.eduardo.rdguez.zssn.domain.SurvivorInventory
 import com.eduardo.rdguez.zssn.mapper.SurvivorMapper
+import com.eduardo.rdguez.zssn.model.response.AverageItemResponse
 import com.eduardo.rdguez.zssn.model.response.InfectionsResponse
-import com.eduardo.rdguez.zssn.model.response.ItemAverage
 import com.eduardo.rdguez.zssn.model.response.LostPointsResponse
 import com.eduardo.rdguez.zssn.model.response.NoInfectionsResponse
 import com.eduardo.rdguez.zssn.service.ReportService
@@ -25,15 +25,15 @@ class ReportServiceImpl(
   override fun findInfectedSurvivorsPercentage(): InfectionsResponse {
     logger.info { "Find infected survivors percentage" }
 
-    val uninfected: Long = survivorService.countAllUninfectedSurvivors()
+    val survivors: Long = survivorService.countAllSurvivors()
     val infected: Long = survivorService.countAllInfectedSurvivors()
     val percentage: Double = ArithmeticUtil.percentage(
       infected.toDouble(),
-      uninfected.toDouble(),
+      survivors.toDouble(),
     )
 
     return InfectionsResponse(
-      survivors = uninfected,
+      survivors = survivors,
       infections = infected,
       percentage = DecimalUtil.truncate(percentage)
     )
@@ -68,19 +68,19 @@ class ReportServiceImpl(
     }
   }
 
-  override fun findAverageItemsBySurvivor(): List<ItemAverage> {
+  override fun findAverageItemsBySurvivor(): List<AverageItemResponse> {
     logger.info { "Find average items by survivor" }
 
     val survivorInventory: List<SurvivorInventory> = survivorInventoryService.findAllSurvivorInventory()
     val uninfected: Long = survivorService.countAllUninfectedSurvivors()
 
-    return survivorInventory.groupBy { it.item }
+    return survivorInventory.groupBy { it.item.name }
       .map { group ->
         val totalQuantity: Int = group.value.sumOf { it.quantity }
         val average: Double = ArithmeticUtil.average(totalQuantity.toDouble(), uninfected.toDouble())
 
-        ItemAverage(
-          name = group.key.name,
+        AverageItemResponse(
+          name = group.key,
           average = average.toInt()
         )
       }
