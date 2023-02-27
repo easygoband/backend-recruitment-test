@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository
 interface SurvivorInventoryRepository : JpaRepository<SurvivorInventory, Long> {
 
   fun findAllBySurvivor(survivor: Survivor): List<SurvivorInventory>
+  fun findAllBySurvivorIsInfectedFalse(): List<SurvivorInventory>
 
 }

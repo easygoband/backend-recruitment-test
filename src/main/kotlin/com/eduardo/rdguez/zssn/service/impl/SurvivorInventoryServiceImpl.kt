@@ -26,7 +26,7 @@ class SurvivorInventoryServiceImpl(
   override fun findAllSurvivorInventory(): List<SurvivorInventory> {
     logger.info { "Find all survivor inventory" }
 
-    return survivorInventoryRepository.findAll()
+    return survivorInventoryRepository.findAllBySurvivorIsInfectedFalse()
   }
 
   @Transactional(propagation = Propagation.NESTED)
