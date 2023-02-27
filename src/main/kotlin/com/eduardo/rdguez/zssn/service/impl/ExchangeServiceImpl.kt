@@ -33,18 +33,16 @@ class ExchangeServiceImpl(
     if (validateExchangePoints(sender, receiver, exchangeRequest))
       throw BadRequestException("Exchange points must be equal")
 
-    val senderInventory: List<SurvivorInventory> = updateInventoryQuantities(
-      sender.survivorInventory, exchangeRequest.senderItems, false
-    )
-    val receiverInventory: List<SurvivorInventory> = updateInventoryQuantities(
-      receiver.survivorInventory, exchangeRequest.receiverItems, true
-    )
+    updateInventoryQuantities(sender.survivorInventory, exchangeRequest.receiverItems, true)
+    updateInventoryQuantities(sender.survivorInventory, exchangeRequest.senderItems, false)
+    updateInventoryQuantities(receiver.survivorInventory, exchangeRequest.senderItems, true)
+    updateInventoryQuantities(receiver.survivorInventory, exchangeRequest.receiverItems, false)
 
     updateSurvivorInventory(sender, receiver)
 
     return ExchangeResponse(
-      senderInventory = SurvivorInventoryMapper.toDto(senderInventory),
-      receiverInventory = SurvivorInventoryMapper.toDto(receiverInventory)
+      senderInventory = SurvivorInventoryMapper.toDto(sender.survivorInventory),
+      receiverInventory = SurvivorInventoryMapper.toDto(receiver.survivorInventory)
     )
   }
 
